@@ -2,13 +2,17 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\DateTimeTrait;
 use App\Repository\CommentariesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommentariesRepository::class)]
 class Commentaries
 {
+    use DateTimeTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -16,9 +20,11 @@ class Commentaries
 
     #[ORM\ManyToOne(inversedBy: 'commentaries')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
     private ?users $id_user = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank()]
     private ?string $content = null;
 
     #[ORM\Column]
