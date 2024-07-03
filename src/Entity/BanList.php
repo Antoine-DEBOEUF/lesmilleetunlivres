@@ -2,13 +2,20 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\DateTimeTrait;
 use App\Repository\BanListRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
 #[ORM\Entity(repositoryClass: BanListRepository::class)]
+#[HasLifecycleCallbacks]
+
+
 class BanList
 {
+    use DateTimeTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

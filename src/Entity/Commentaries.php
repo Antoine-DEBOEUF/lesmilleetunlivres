@@ -2,16 +2,19 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\DateTimeTrait;
-use App\Repository\CommentariesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\DateTimeTrait;
+use App\Entity\Traits\EnableTrait;
+use App\Repository\CommentariesRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommentariesRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Commentaries
 {
     use DateTimeTrait;
+    use EnableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -27,15 +30,11 @@ class Commentaries
     #[Assert\NotBlank()]
     private ?string $content = null;
 
-    #[ORM\Column]
-    private ?bool $active = null;
-
     #[ORM\ManyToOne(inversedBy: 'commentaries')]
     #[ORM\JoinColumn(nullable: false)]
     private ?book $id_livre = null;
 
-    #[ORM\ManyToOne(inversedBy: 'id_commentary')]
-    private ?Reports $reports = null;
+
 
     public function getId(): ?int
     {
@@ -66,18 +65,6 @@ class Commentaries
         return $this;
     }
 
-    public function isActive(): ?bool
-    {
-        return $this->active;
-    }
-
-    public function setActive(bool $active): static
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
     public function getIdLivre(): ?book
     {
         return $this->id_livre;
@@ -86,18 +73,6 @@ class Commentaries
     public function setIdLivre(?book $id_livre): static
     {
         $this->id_livre = $id_livre;
-
-        return $this;
-    }
-
-    public function getReports(): ?Reports
-    {
-        return $this->reports;
-    }
-
-    public function setReports(?Reports $reports): static
-    {
-        $this->reports = $reports;
 
         return $this;
     }

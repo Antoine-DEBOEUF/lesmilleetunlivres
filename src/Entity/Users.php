@@ -2,16 +2,25 @@
 
 namespace App\Entity;
 
-use App\Repository\UsersRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Traits\DateTimeTrait;
+use App\Entity\Traits\EnableTrait;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UsersRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
+#[UniqueEntity(['username', 'email'])]
 #[ORM\HasLifecycleCallbacks]
-class Users
+class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use DateTimeTrait;
+    use EnableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -30,11 +39,11 @@ class Users
     #[Assert\NotBlank()]
     private ?string $password = null;
 
+    /**
+     * @var list<string> The user roles
+     */
     #[ORM\Column]
-    private array $role = [];
-
-    #[ORM\Column]
-    private ?bool $active = null;
+    private array $roles = [];
 
     /**
      * @var Collection<int, Commentaries>
@@ -42,11 +51,7 @@ class Users
     #[ORM\OneToMany(targetEntity: Commentaries::class, mappedBy: 'id_user')]
     private Collection $commentaries;
 
-    #[ORM\ManyToOne(inversedBy: 'id_user')]
-    private ?Favorites $favorites = null;
 
-    #[ORM\ManyToOne(inversedBy: 'id_user')]
-    private ?Reports $reports = null;
 
     /**
      * @var Collection<int, BanList>
@@ -54,15 +59,32 @@ class Users
     #[ORM\OneToMany(targetEntity: BanList::class, mappedBy: 'id_user')]
     private Collection $banLists;
 
+    /**
+     * @var Collection<int, Book>
+     */
+    #[ORM\ManyToMany(targetEntity: Book::class, inversedBy: 'users')]
+    private Collection $favoris;
+
     public function __construct()
     {
         $this->commentaries = new ArrayCollection();
         $this->banLists = new ArrayCollection();
+        $this->favoris = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->username;
     }
 
     public function getUsername(): ?string
@@ -89,6 +111,9 @@ class Users
         return $this;
     }
 
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
     public function getPassword(): ?string
     {
         return $this->password;
@@ -101,28 +126,37 @@ class Users
         return $this;
     }
 
-    public function getRole(): array
+    /**
+     * @see UserInterface
+     * @return list<string>
+     */
+    public function getRoles(): array
     {
-        return $this->role;
+        return $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
-    public function setRole(array $role): static
+    /**
+     * @param list<string> $roles
+     */
+    public function setRoles(array $roles): static
     {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
     }
 
-    public function isActive(): ?bool
-    {
-        return $this->active;
-    }
 
-    public function setActive(bool $active): static
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
     {
-        $this->active = $active;
-
-        return $this;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     /**
@@ -155,29 +189,7 @@ class Users
         return $this;
     }
 
-    public function getFavorites(): ?Favorites
-    {
-        return $this->favorites;
-    }
 
-    public function setFavorites(?Favorites $favorites): static
-    {
-        $this->favorites = $favorites;
-
-        return $this;
-    }
-
-    public function getReports(): ?Reports
-    {
-        return $this->reports;
-    }
-
-    public function setReports(?Reports $reports): static
-    {
-        $this->reports = $reports;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, BanList>
@@ -205,6 +217,30 @@ class Users
                 $banList->setIdUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Book>
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(Book $favori): static
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris->add($favori);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(Book $favori): static
+    {
+        $this->favoris->removeElement($favori);
 
         return $this;
     }
