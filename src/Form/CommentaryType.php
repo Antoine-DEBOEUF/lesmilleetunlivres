@@ -30,7 +30,7 @@ class CommentaryType extends AbstractType
         if ($options['isAdmin']) {
             $builder
                 ->add(
-                    'active',
+                    'enable',
                     CheckboxType::class,
                     [
                         'label' => 'Actif',

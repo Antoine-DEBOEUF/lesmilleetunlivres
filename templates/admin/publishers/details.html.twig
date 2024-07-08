@@ -1,0 +1,31 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Fiche éditeur
+{% endblock %}
+
+{% block body %}
+	<h1>Fiche éditeur</h1>
+
+	<div>
+		<h2>{{publisher.name}}</h2>
+
+		{% for book in publisher.books %}
+
+			<div>
+				<a href="{{path('admin.books.details', {id: book.id})}}">
+					{% for author in book.authors %}
+						{{author.name}}{{author.firstName}}
+
+					{% endfor %}
+					{{book.file}}
+					{{book.title}}
+					{{book.isbn}}
+					{{book.publishing_date}}
+				</a>
+
+			</div>
+
+		{% endfor %}
+		<a href="{{path('admin.publisher.edit', {id: publisher.id})}}">Modifier</a>
+	</div>
+{% endblock %}

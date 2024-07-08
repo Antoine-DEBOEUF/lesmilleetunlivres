@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Profil
+	{{parent()}}
+{% endblock %}
+
+{% block body %}
+	<h1>Profil utilisateur</h1>
+
+	<div>
+		<h2>{{user.username}}</h2>
+		{% for role in user.roles %}
+
+			{{role == 'ROLE_ADMIN' ? 'Administrateur' : 'Utilisateur' }}
+
+		{% endfor %}
+
+		<a href="{{path('admin.users.edit', {id: user.id})}}">Modifier le profil</a>
+
+	</div>
+{% endblock %}

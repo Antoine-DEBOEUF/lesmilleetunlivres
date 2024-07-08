@@ -1,0 +1,105 @@
+<div>
+	{% if books is empty %}
+
+		Aucune fiche livre en base de données
+	{% else %}
+
+		{% for book in books %}
+
+			{% if book.enable == true %}
+
+
+				{{book.title}}
+
+				{% if book.categories is empty %}
+
+					{% else %}
+
+						{% for categorie in book.categories %}
+							{{categorie.title}}
+
+						{% endfor %}
+				{% endif %}
+
+				<aside>{{book.file}}</aside>
+				<div>
+					{% for author in book.authors %}
+						{{author.name}}
+						{{author.firstName}}
+
+					{% endfor %}
+
+					{{book.publisher}}
+					{{book.publishing_date}}
+					{{book.isbn}}
+				</div>
+
+				<div>{{book.synopsis}}</div>
+
+				<div>
+					{% include 'commentCard.html.twig' %}
+				</div>
+
+				<button>Rédiger un avis</button>
+
+				{% if app.user is defined and is_granted ('ROLE_ADMIN') %}
+
+					<a href="">Modifier la fiche</a>
+					<form action="{{ path('admin.books.delete', {id:article.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette fiche?)">
+						<input type="hidden" name="token" value="{{csrf_token('delete')}}">
+						<button>Supprimer</button>
+					</form>
+
+				{% endif %}
+			{% else %}
+				{% if app.user is defined and is_granted ('ROLE_ADMIN') %}
+					{{book.title}}
+
+					{% if book.categories is empty %}
+
+						{% else %}
+
+							{% for categorie in book.categories %}
+								{{categorie.title}}
+
+							{% endfor %}
+					{% endif %}
+
+					<aside>{{book.file}}</aside>
+					<div>
+						{% for author in book.authors %}
+							{{author.name}}
+							{{author.firstName}}
+
+						{% endfor %}
+
+						{{book.publisher}}
+						{{book.publishing_date}}
+						{{book.isbn}}
+					</div>
+
+					<div>{{book.synopsis}}</div>
+
+					<div>
+						{% include 'commentCard.html.twig' %}
+					</div>
+
+					<button>Rédiger un avis</button>
+
+					{% if app.user is defined and is_granted ('ROLE_ADMIN') %}
+
+						<a href="">Modifier la fiche</a>
+						<form action="{{ path('admin.books.delete', {id:article.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette fiche?)">
+							<input type="hidden" name="token" value="{{csrf_token('delete')}}">
+							<button>Supprimer</button>
+						</form>
+
+					{% endif %}
+				{% endif %}
+			{% endif %}
+
+		{% endfor %}
+	{% endif %}
+
+
+</div>

@@ -17,7 +17,7 @@ class BookController extends AbstractController
 
 {
     public function __construct(
-        private BookRepository $userRepo,
+        private BookRepository $bookRepo,
         private EntityManagerInterface $em
     ) {
     }
@@ -26,7 +26,7 @@ class BookController extends AbstractController
     public function index(): Response
     {
         return $this->render('admin/books/index.html.twig', [
-            'books' => $this->userRepo->findAll()
+            'books' => $this->bookRepo->findAll()
         ]);
     }
 

@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class LoginController extends AbstractController
+class SecurityController extends AbstractController
 {
     #[Route('/login', name: 'app.login', methods: ['GET', 'POST'])]
     public function login(AuthenticationUtils $authenticationUtils): Response
@@ -40,10 +40,13 @@ class LoginController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($hasher->hashPassword($user, $form->get('password')->getData()));
 
+            $user->setEnable(true);
+
+
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'Vous êtes bien inscrit à notre application');
+            $this->addFlash('success', 'Inscription validée');
             return $this->redirectToRoute('app.login');
         }
 
@@ -53,11 +56,15 @@ class LoginController extends AbstractController
     #[Route('/redirect', name: 'app_redirect_after_login', methods: ['GET', 'POST'])]
     public function redirectAfterLogin(): Response
     {
-
         $currentUser = $this->getUser();
         if ($currentUser instanceof Users) {
-            $userId = $currentUser->getId();
-            return $this->redirectToRoute('app.user.profile', ['id' => $userId]);
+
+            if (in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
+                return $this->redirectToRoute('admin.books.index');
+            } else {
+
+                return $this->redirectToRoute('app.users.books.index');
+            }
         }
     }
 }

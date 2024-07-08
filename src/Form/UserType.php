@@ -54,7 +54,7 @@ class UserType extends AbstractType
                 'first_options' => [
                     'label' => "Mot de passe :",
                     'constraints' => [
-                        new Assert\NotBlank(),
+                        new Assert\NotBlank(['message' => 'Indiquez un mot de passe']),
                         new Assert\Length([
                             'max' => 4096
                         ]),
@@ -63,19 +63,20 @@ class UserType extends AbstractType
                         )
                     ]
                 ],
-                'second_options' => ['label' => "Confirmation mot de passe :"]
+                'second_options' => ['label' => "Confirmation du mot de passe :"]
 
             ]);
 
         if ($options['isAdmin']) {
             $builder
                 ->remove('password')
+                ->remove('username')
+                ->remove('email')
                 ->add(
-                    'role',
+                    'roles',
                     ChoiceType::class,
                     [
                         'label' => 'Roles :',
-                        'placeholder' => 'Sélectionner un rôle',
                         'choices' => [
                             'Utilisateur' => 'ROLE_USER',
                             'Administrateur' => 'ROLE_ADMIN',
@@ -85,10 +86,10 @@ class UserType extends AbstractType
                     ]
                 )
                 ->add(
-                    'active',
+                    'enable',
                     CheckboxType::class,
                     [
-                        'label' => 'Actif',
+                        'label' => 'Actif (décochez la case pour suspendre le compte) :',
                         'required' => false
 
                     ]

@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Profil
+	{{parent()}}
+{% endblock %}
+
+{% block body %}
+	<h1>Profil utilisateur</h1>
+
+	<div>
+		<h2>{{user.username}}</h2>
+		{% for role in user.roles %}
+
+			{{role == 'ROLE_ADMIN' ? 'Administrateur' : 'Utilisateur' }}
+
+		{% endfor %}
+
+		<form action="{{path('users.user.delete', {id:user.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre profil?')">
+			<input type="hidden" name="token" value="{{csrf_token('delete' ~ user.id)}}">
+			<button>Supprimer votre compte</button>
+		</form>
+	</div>
+{% endblock %}

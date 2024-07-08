@@ -1,0 +1,17 @@
+<div>
+	{% if book.commentaries is empty %}
+		Aucun commentaire n'a encore été posté
+	{% else %}
+
+		{% for commentary in book.commentaries %}
+
+			<div>
+				{{commentary.username}}
+				{{commentary.createdAt}}
+			</div>
+			<div>
+				{{commentary.content}}
+			</div>
+		{% endfor %}
+	{% endif %}
+</div>

@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Utilisateurs
+{% endblock %}
+
+{% block body %}
+
+	<h1>Liste des utilisateurs</h1>
+
+	<div>
+
+		{% for user in users %}
+
+			<a href="{{path('admin.users.profile', {id: user.id})}}">
+				<div>
+					<h2>{{user.username}}</h2>
+
+					{% for role in user.roles %}
+
+						{{role == 'ROLE_ADMIN'? 'Admin': 'Utilisateur'}}
+
+					{% endfor %}
+
+					{{user.enable ? '' : 'Banni'}}
+
+				</div>
+			</a>
+
+		{% endfor %}
+
+	</div>
+
+{% endblock %}

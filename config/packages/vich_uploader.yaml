@@ -23,7 +23,7 @@ vich_uploader:
     type: attribute
 
   mappings:
-    documents:
+    images:
       uri_prefix: /images
       upload_destination: image_fs
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

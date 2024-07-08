@@ -7,6 +7,7 @@ use App\Entity\Author;
 use App\Entity\Favorites;
 use App\Entity\Categories;
 use App\Entity\BookCategories;
+use App\Entity\Publisher;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
@@ -44,15 +45,38 @@ class BookType extends AbstractType
                 [
                     'label' => 'Auteur(s) :',
                     'class' => Author::class,
-                    'choice_label' => function (Author $author): string {
-                        return $author->getName();
+                    'choice_label' => 'Name',
+                    'query_builder' => function (EntityRepository $er): QueryBuilder {
+                        return $er->createQueryBuilder('a')
+                            ->orderBy('a.Name', 'ASC');
                     },
                     'multiple' => true,
-                    'expanded' => true,
+                    'expanded' => false,
                     'autocomplete' => true,
                     'by_reference' => true,
                     'constraints' => [
                         new NotBlank(['message' => 'Sélectionnez un auteur à associer à ce livre'])
+                    ]
+                ]
+            )
+
+            ->add(
+                'publisher',
+                EntityType::class,
+                [
+                    'label' => 'Editeur :',
+                    'class' => Publisher::class,
+                    'choice_label' => 'Name',
+                    'query_builder' => function (EntityRepository $er): QueryBuilder {
+                        return $er->createQueryBuilder('p')
+                            ->orderBy('p.Name', 'ASC');
+                    },
+                    'multiple' => false,
+                    'expanded' => false,
+                    'autocomplete' => true,
+                    'by_reference' => true,
+                    'constraints' => [
+                        new NotBlank(['message' => 'Sélectionnez l\'éditeur de ce livre'])
                     ]
                 ]
             )
@@ -91,13 +115,11 @@ class BookType extends AbstractType
             ->add('Categories', EntityType::class, [
                 'label' => 'Catégorie(s) :',
                 'class' => Categories::class,
-                'choice_label' =>  function (Categories $Categ): string {
-                    return $Categ->getTitle();
+                'choice_label' =>  'title',
+                'query_builder' => function (EntityRepository $er): QueryBuilder {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.title', 'ASC');
                 },
-                // 'query_builder' => function (EntityRepository $er): QueryBuilder {
-                //     return $er->createQueryBuilder('b')
-                //         ->orderBy('b.Id', 'ASC');
-                // },
                 'expanded' => true,
                 'multiple' => true,
                 'by_reference' => true,
@@ -119,7 +141,7 @@ class BookType extends AbstractType
 
 
             ->add(
-                'active',
+                'enable',
                 CheckboxType::class,
                 [
                     'label' => 'Publier la fiche',

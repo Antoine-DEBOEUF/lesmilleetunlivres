@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Users;
 
 use App\Entity\Book;
 use App\Entity\Commentaries;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/admin/commentaries', 'admin.commentaries')]
+#[Route('commentaries', 'commentaries')]
 class CommentaryController extends AbstractController
 {
 
@@ -28,40 +28,42 @@ class CommentaryController extends AbstractController
     {
         if (!$book) {
             $this->addFlash('error', 'Fiche livre non trouvée');
-            return $this->redirectToRoute('admin.books.index');
+            return $this->redirectToRoute('users.books.details');
         }
 
-        return $this->render('admin/commentaries/index.html.twig', [
+        return $this->render('Users/commentaries/index.html.twig', [
             'commentaires' => $book->getCommentaries()
         ]);
     }
 
-    #[Route('/create', '.create', methods: ['GET', 'POST'])]
-    public function create(Request $request): Response|RedirectResponse
-    { {
-            $commentary = new Commentaries;
-            $form = $this->createForm(CommentaryType::class, $commentary, ['isAdmin' => true]);
-            $form->handleRequest($request);
+    // #[Route('/create', '.create', methods: ['GET', 'POST'])]
+    // public function create(Request $request): Response|RedirectResponse
+    // { {
+    //         $commentary = new Commentaries;
+    //         $form = $this->createForm(CommentaryType::class, $commentary);
+    //         $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->em->persist($commentary);
-                $this->em->flush();
+    //         if ($form->isSubmitted() && $form->isValid()) {
+    //             $this->em->persist($commentary);
+    //             $this->em->flush();
 
-                $this->addFlash('success', 'Votre commentaire a bien été publié');
+    //             $this->addFlash('success', 'Votre commentaire a bien été publié');
 
-                return $this->redirectToRoute('admin.books.details');
-            }
+    //             return $this->redirectToRoute('users.books.details');
+    //         }
 
-            return $this->render('admin/commentary/create.html.twig', ['form' => $form]);
-        }
-    }
+    //         return $this->render('users/commentary/create.html.twig', ['form' => $form]);
+    //     }
+    // }
+
+
 
     #[Route('/{id}/delete', '.delete', methods: ['POST'])]
     public function delete(?Commentaries $comment, ?Request $request): RedirectResponse
     {
         if (!$comment) {
             $this->addFlash('error', 'Commentaire non trouvé');
-            return $this->redirectToRoute('admin.books.index');
+            return $this->redirectToRoute('admin.books.details');
         }
 
         if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('token'))) {

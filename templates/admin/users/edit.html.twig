@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Profil
+	{{parent()}}
+{% endblock %}
+
+{% block body %}
+	<h1>Profil utilisateur</h1>
+
+	<div>
+		<h2>{{user.username}}</h2>
+		{% for role in user.roles %}
+
+			{{role == 'ROLE_ADMIN' ? 'Administrateur' : 'Utilisateur' }}
+
+		{% endfor %}
+
+		{{form_start(form)}}
+		{{form_row(form.roles)}}
+		{{form_row(form.enable)}}
+		<button type="submit">Enregister les modifications</button>
+		{{form_end(form)}}
+
+	</div>
+{% endblock %}

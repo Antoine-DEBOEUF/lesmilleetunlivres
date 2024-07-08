@@ -67,11 +67,11 @@ class Book
     /**
      * @var Collection<int, categories>
      */
-    #[ORM\ManyToMany(targetEntity: categories::class, inversedBy: 'books')]
+    #[ORM\ManyToMany(targetEntity: Categories::class, inversedBy: 'books')]
     private Collection $categories;
 
 
-    #[Vich\UploadableField(mapping: 'images', fileNameProperty: 'fileName', size: 'fileSize')]
+    #[Vich\UploadableField(mapping: 'images', fileNameProperty: 'imageName', size: 'fileSize')]
     #[Assert\Image(detectCorrupted: true)]
     private ?File $File = null;
 

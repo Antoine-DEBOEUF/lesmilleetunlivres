@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Fiche livre
+	{{parent()}}
+{% endblock %}
+
+{% block body %}
+	<h1>Fiche livre</h1>
+
+	<div>
+		<h2>{{book.title}}</h2>
+		{% for categorie in book.categories %}
+
+			{{categorie.title }}
+
+		{% endfor %}
+
+		{% for author in book.authors %}
+
+			{{author.name}}
+			{{author.firstName}}
+
+		{% endfor %}
+
+		{{book.publisher}}
+		{{book.publishing_date}}
+		{{book.isbn}}
+		{{book.synopsis}}
+
+
+	</div>
+
+	<div>
+		<h2>Avis</h2>
+
+		{% for commentary in book.commentaries %}
+			{{commentary.user}}
+			{{commentary.createdAt}}
+			{{commentary.content}}
+			<a href="">Signaler</a>
+		{% endfor %}
+
+		Rédiger un Avis
+		{{form_start(form)}}
+		{{form_widget(form)}}
+		<button type="submit">Publier</button>
+		{{form_end(form)}}
+	</div>
+{% endblock %}

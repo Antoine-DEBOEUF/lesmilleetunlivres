@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Users;
 
 use App\Entity\Users;
 use App\Form\UserType;
@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/admin/users', 'admin.users')]
+#[Route('/users', 'users')]
 class UserController extends AbstractController
 
 {
@@ -25,7 +25,7 @@ class UserController extends AbstractController
     #[Route('', name: '.index')]
     public function index(): Response
     {
-        return $this->render('admin/users/index.html.twig', [
+        return $this->render('users/index.html.twig', [
             'users' => $this->userRepo->findAll()
         ]);
     }
@@ -37,7 +37,7 @@ class UserController extends AbstractController
         $userId = $user->getId();
 
         return $this->render(
-            'admin/users/profile.html.twig',
+            'users/profile.html.twig',
             [
                 'user' => $this->userRepo->findOneById($userId)
             ]
@@ -53,7 +53,7 @@ class UserController extends AbstractController
         }
         $userId = $user->getId();
 
-        $form = $this->createForm(UserType::class, $user, ['isAdmin' => true]);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -62,11 +62,11 @@ class UserController extends AbstractController
 
             $this->addFlash('success', 'Utilisateur modifié avec succès');
 
-            return $this->redirectToRoute('admin.users.index');
+            return $this->redirectToRoute('users.index');
         }
 
         return $this->render(
-            'Admin/Users/edit.html.twig',
+            'Users/edit.html.twig',
             [
                 'form' => $form,
                 'user' => $this->userRepo->findOneById($userId)
@@ -79,7 +79,7 @@ class UserController extends AbstractController
     {
         if (!$user) {
             $this->addFlash('error', 'Utilisateur non trouvé');
-            return $this->redirectToRoute('admin.users.index');
+            return $this->redirectToRoute('users.profile');
         }
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('token'))) {
             $this->em->remove($user);
@@ -90,6 +90,6 @@ class UserController extends AbstractController
             $this->addflash('error', 'token CSRF invalide');
         }
 
-        return $this->redirectToRoute('admin.users.index');
+        return $this->redirectToRoute('users.index');
     }
 }

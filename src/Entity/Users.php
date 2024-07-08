@@ -35,8 +35,11 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email()]
     private ?string $email = null;
 
+    /**
+     * @var string The hashed password
+     */
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    // #[Assert\NotBlank()]
     private ?string $password = null;
 
     /**
@@ -70,6 +73,8 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         $this->commentaries = new ArrayCollection();
         $this->banLists = new ArrayCollection();
         $this->favoris = new ArrayCollection();
+        $this->enable = true;
+        $this->roles = ['ROLE_USER'];
     }
 
     public function getId(): ?int

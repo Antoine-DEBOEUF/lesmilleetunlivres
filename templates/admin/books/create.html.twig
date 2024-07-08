@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Créer une fiche livre
+	{{parent()}}
+{% endblock %}
+
+{% block body %}
+	<h1>Création d'une fiche pour un livre</h1>
+
+	<a href="admin.books.index">Retour à la liste</a>
+
+	{{form_start(form)}}
+	{{form_widget(form)}}
+	<button type="submit">Créer la fiche</button>
+	{{form_end(form)}}
+
+{% endblock %}

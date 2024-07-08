@@ -21,7 +21,7 @@ class PublisherType extends AbstractType
                     'label' => 'Nom :',
                     'required' => false,
                     'constraints' => [
-                        new NotBlank(['message' => 'Renseignez le nom de l\'auteur'])
+                        new NotBlank(['message' => 'Renseignez le nom de l\'éditeur'])
                     ]
                 ]
             );
