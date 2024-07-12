@@ -30,8 +30,8 @@ class Book
 
     #[ORM\Column]
     #[Assert\NotBlank()]
-    #[Assert\Length(max: 13, min: 10)]
-    private ?int $isbn = null;
+    #[Assert\Length(max: 17, min: 14)]
+    private ?string $isbn = null;
 
     #[ORM\Column]
     #[Assert\NotBlank()]
@@ -40,11 +40,6 @@ class Book
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $synopsis = null;
 
-    /**
-     * @var Collection<int, Commentaries>
-     */
-    #[ORM\OneToMany(targetEntity: Commentaries::class, mappedBy: 'id_livre')]
-    private Collection $commentaries;
 
     /**
      * @var Collection<int, Users>
@@ -57,12 +52,12 @@ class Book
     /**
      * @var Collection<int, author>
      */
-    #[ORM\ManyToMany(targetEntity: author::class, inversedBy: 'books')]
+    #[ORM\ManyToMany(targetEntity: Author::class, inversedBy: 'books')]
     private Collection $author;
 
     #[ORM\ManyToOne(inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?publisher $publisher = null;
+    private ?Publisher $publisher = null;
 
     /**
      * @var Collection<int, categories>
@@ -81,13 +76,20 @@ class Book
     #[ORM\Column(nullable: true)]
     private ?int $fileSize = null;
 
+    /**
+     * @var Collection<int, Commentaries>
+     */
+    #[ORM\OneToMany(targetEntity: Commentaries::class, mappedBy: 'book')]
+    private Collection $commentaries;
+
     public function __construct()
     {
-        $this->commentaries = new ArrayCollection();
+
         $this->users = new ArrayCollection();
 
         $this->author = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->commentaries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -107,12 +109,12 @@ class Book
         return $this;
     }
 
-    public function getIsbn(): ?int
+    public function getIsbn(): ?string
     {
         return $this->isbn;
     }
 
-    public function setIsbn(int $isbn): static
+    public function setIsbn(string $isbn): static
     {
         $this->isbn = $isbn;
 
@@ -144,35 +146,6 @@ class Book
     }
 
 
-    /**
-     * @return Collection<int, Commentaries>
-     */
-    public function getCommentaries(): Collection
-    {
-        return $this->commentaries;
-    }
-
-    public function addCommentary(Commentaries $commentary): static
-    {
-        if (!$this->commentaries->contains($commentary)) {
-            $this->commentaries->add($commentary);
-            $commentary->setIdLivre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommentary(Commentaries $commentary): static
-    {
-        if ($this->commentaries->removeElement($commentary)) {
-            // set the owning side to null (unless already changed)
-            if ($commentary->getIdLivre() === $this) {
-                $commentary->setIdLivre(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Users>
@@ -333,6 +306,36 @@ class Book
     public function setFileSize(?int $fileSize): self
     {
         $this->fileSize = $fileSize;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaries>
+     */
+    public function getCommentaries(): Collection
+    {
+        return $this->commentaries;
+    }
+
+    public function addCommentary(Commentaries $commentary): static
+    {
+        if (!$this->commentaries->contains($commentary)) {
+            $this->commentaries->add($commentary);
+            $commentary->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentary(Commentaries $commentary): static
+    {
+        if ($this->commentaries->removeElement($commentary)) {
+            // set the owning side to null (unless already changed)
+            if ($commentary->getBook() === $this) {
+                $commentary->setBook(null);
+            }
+        }
 
         return $this;
     }

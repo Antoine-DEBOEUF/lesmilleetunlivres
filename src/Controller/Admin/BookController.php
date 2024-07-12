@@ -4,6 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Book;
 use App\Form\BookType;
+use App\Entity\Commentaries;
+use App\Form\CommentaryType;
 use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,13 +24,6 @@ class BookController extends AbstractController
     ) {
     }
 
-    #[Route('', name: '.index')]
-    public function index(): Response
-    {
-        return $this->render('admin/books/index.html.twig', [
-            'books' => $this->bookRepo->findAll()
-        ]);
-    }
 
     #[Route('/create', '.create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response|RedirectResponse

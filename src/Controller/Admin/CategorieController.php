@@ -22,15 +22,6 @@ class CategorieController extends AbstractController
     ) {
     }
 
-    #[Route('', '.index', methods: ['GET'])]
-    public function index(): Response
-    {
-        return $this->render(
-            'admin/categories/index.html.twig',
-            ['categories' => $this->categRepo->findAllOrderByTitle()]
-        );
-    }
-
     #[Route('/create', '.create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response|RedirectResponse
     { {

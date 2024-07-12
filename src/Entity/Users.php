@@ -48,12 +48,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    /**
-     * @var Collection<int, Commentaries>
-     */
-    #[ORM\OneToMany(targetEntity: Commentaries::class, mappedBy: 'id_user')]
-    private Collection $commentaries;
-
 
 
     /**
@@ -68,13 +62,19 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Book::class, inversedBy: 'users')]
     private Collection $favoris;
 
+    /**
+     * @var Collection<int, Commentaries>
+     */
+    #[ORM\OneToMany(targetEntity: Commentaries::class, mappedBy: 'user')]
+    private Collection $commentaries;
+
     public function __construct()
     {
-        $this->commentaries = new ArrayCollection();
         $this->banLists = new ArrayCollection();
         $this->favoris = new ArrayCollection();
         $this->enable = true;
         $this->roles = ['ROLE_USER'];
+        $this->commentaries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -164,35 +164,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    /**
-     * @return Collection<int, Commentaries>
-     */
-    public function getCommentaries(): Collection
-    {
-        return $this->commentaries;
-    }
 
-    public function addCommentary(Commentaries $commentary): static
-    {
-        if (!$this->commentaries->contains($commentary)) {
-            $this->commentaries->add($commentary);
-            $commentary->setIdUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommentary(Commentaries $commentary): static
-    {
-        if ($this->commentaries->removeElement($commentary)) {
-            // set the owning side to null (unless already changed)
-            if ($commentary->getIdUser() === $this) {
-                $commentary->setIdUser(null);
-            }
-        }
-
-        return $this;
-    }
 
 
 
@@ -246,6 +218,36 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeFavori(Book $favori): static
     {
         $this->favoris->removeElement($favori);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaries>
+     */
+    public function getCommentaries(): Collection
+    {
+        return $this->commentaries;
+    }
+
+    public function addCommentary(Commentaries $commentary): static
+    {
+        if (!$this->commentaries->contains($commentary)) {
+            $this->commentaries->add($commentary);
+            $commentary->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentary(Commentaries $commentary): static
+    {
+        if ($this->commentaries->removeElement($commentary)) {
+            // set the owning side to null (unless already changed)
+            if ($commentary->getUser() === $this) {
+                $commentary->setUser(null);
+            }
+        }
 
         return $this;
     }

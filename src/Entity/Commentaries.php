@@ -2,12 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\DateTimeTrait;
 use App\Entity\Traits\EnableTrait;
 use App\Repository\CommentariesRepository;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommentariesRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -21,36 +20,20 @@ class Commentaries
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commentaries')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotBlank]
-    private ?users $id_user = null;
-
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank()]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'commentaries')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?book $id_livre = null;
+    private ?Users $user = null;
 
-
+    #[ORM\ManyToOne(inversedBy: 'commentaries')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Book $book = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdUser(): ?users
-    {
-        return $this->id_user;
-    }
-
-    public function setIdUser(?users $id_user): static
-    {
-        $this->id_user = $id_user;
-
-        return $this;
     }
 
     public function getContent(): ?string
@@ -65,14 +48,26 @@ class Commentaries
         return $this;
     }
 
-    public function getIdLivre(): ?book
+    public function getUser(): ?Users
     {
-        return $this->id_livre;
+        return $this->user;
     }
 
-    public function setIdLivre(?book $id_livre): static
+    public function setUser(?Users $user): static
     {
-        $this->id_livre = $id_livre;
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getBook(): ?Book
+    {
+        return $this->book;
+    }
+
+    public function setBook(?Book $book): static
+    {
+        $this->book = $book;
 
         return $this;
     }

@@ -15,10 +15,26 @@
 			{{role == 'ROLE_ADMIN' ? 'Administrateur' : 'Utilisateur' }}
 
 		{% endfor %}
+		<a href="{{path('users.profile', {id: user.id})}}">
+			<button>Mettre à jour votr profil</button>
+		</a>
 
-		<form action="{{path('users.user.delete', {id:user.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre profil?')">
-			<input type="hidden" name="token" value="{{csrf_token('delete' ~ user.id)}}">
-			<button>Supprimer votre compte</button>
-		</form>
+		{% if is_granted('ROLE_ADMIN') %}
+
+			{{form_start(form)}}
+			{{form_row(form.roles)}}
+			{{form_row(form.enable)}}
+			<button type="submit">Valider</button>
+			{{form_end(form)}}
+		{% endif %}
+
+		{% if user == app.user %}
+
+			<form action="{{path('users.delete', {id:user.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre profil?')">
+				<input type="hidden" name="token" value="{{csrf_token('delete' ~ user.id)}}">
+				<button>Supprimer votre compte</button>
+			</form>
+
+		{% endif %}
 	</div>
 {% endblock %}

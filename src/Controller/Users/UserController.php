@@ -22,24 +22,23 @@ class UserController extends AbstractController
     ) {
     }
 
-    #[Route('', name: '.index')]
-    public function index(): Response
-    {
-        return $this->render('users/index.html.twig', [
-            'users' => $this->userRepo->findAll()
-        ]);
-    }
-
-    #[Route('/{id}/profil', '.profile', methods: ['GET'])]
-    public function show(?Users $user): Response|RedirectResponse
+    #[Route('/profil', '.profile', methods: ['GET'])]
+    public function show(Request $request): Response|RedirectResponse
 
     {
-        $userId = $user->getId();
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user, ['isAdmin' => true]);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($user);
+            $this->em->flush();
+        }
         return $this->render(
-            'users/profile.html.twig',
+            'Users/user/profile.html.twig',
             [
-                'user' => $this->userRepo->findOneById($userId)
+                'user' => $user,
+                'form' => $form
             ]
         );
     }
@@ -90,6 +89,6 @@ class UserController extends AbstractController
             $this->addflash('error', 'token CSRF invalide');
         }
 
-        return $this->redirectToRoute('users.index');
+        return $this->redirectToRoute('books');
     }
 }

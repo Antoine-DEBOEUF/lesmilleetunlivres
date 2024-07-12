@@ -3,9 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Commentaries;
-use App\Entity\book;
-use App\Entity\users;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -22,8 +19,8 @@ class CommentaryType extends AbstractType
                 TextareaType::class,
                 [
                     'label' => false,
-                    'required' => false,
-                    'attr' => ['placeholder' => 'Votre commentaire', 'rows' => 10]
+                    'required' => true,
+                    'attr' => ['placeholder' => 'Cliquez ici pour rédiger votre texte', 'rows' => 10]
                 ]
             );
 
@@ -33,7 +30,7 @@ class CommentaryType extends AbstractType
                     'enable',
                     CheckboxType::class,
                     [
-                        'label' => 'Actif',
+                        'label' => 'Visibilité publique ?',
                         'required' => false
                     ]
                 );

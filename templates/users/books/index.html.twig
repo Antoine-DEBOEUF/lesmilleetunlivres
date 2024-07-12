@@ -1,12 +1,84 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Livres
+{% block title %}
+	{{parent()}}
+	| Livres
 {% endblock %}
 
 {% block body %}
 
 	<h1>Index des livres</h1>
 
-	{% include "components/bookCard.html.twig" %}
+	{% for book in books %}
+		{% if book.enable == 1 %}
+			<div class="bookCard">
+				<a href="{{ path('books.details', {id: book.id})}}">
+					<div class="bookCardContent">
+						<aside>
+							{% if book.file %}
+								{{book.file}}
+							{% else %}
+								<img src="/images/defaultImage.jpg" alt="Couverture du livre indisponible" width="130" height="200">
+							{% endif %}
+
+						</aside>
+						<div class="bookCardIntel">
+							<h2 class="bookCardTitle">{{book.title}}</h2>
+
+							<p>Auteur(s) :
+								{% for author in book.author %}
+									{{author.name}}
+									{{author.firstName}}
+								{% endfor %}
+							</p>
+							<p>Editeur :
+								{{book.publisher}}</p>
+							<p>Paru en :
+								{{book.publishingDate}}</p>
+							<p>ISBN :
+								{{book.isbn}}</p>
+							{% if is_granted('ROLE_ADMIN') %}
+								<p>Visibilité : Publique</p>
+							{% endif %}
+
+						</div>
+					</div>
+				</a>
+			</div>
+		{% elseif book.enable == 0 and is_granted('ROLE_ADMIN') %}
+			<div class="bookCard">
+				<a href="{{ path('books.details', {id: book.id})}}">
+					<div class="bookCardContent">
+						<aside>
+							{% if book.file %}
+								{{book.file}}
+							{% else %}
+								<img src="/images/defaultImage.jpg" alt="Couverture du livre indisponible" width="130" height="200">
+							{% endif %}
+
+						</aside>
+						<div class="bookCardIntel">
+							<h2 class="bookCardTitle">{{book.title}}</h2>
+
+							<p>Auteur(s) :
+								{% for author in book.author %}
+									{{author.name}}
+									{{author.firstName}}
+								{% endfor %}
+							</p>
+							<p>Editeur :
+								{{book.publisher}}</p>
+							<p>Paru en :
+								{{book.publishingDate}}</p>
+							<p>ISBN :
+								{{book.isbn}}</p>
+							<p>Visibilité : Restreinte</p>
+
+						</div>
+					</div>
+				</a>
+			</div>
+		{% endif %}
+	{% endfor %}
 
 {% endblock %}

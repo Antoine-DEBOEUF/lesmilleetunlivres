@@ -77,4 +77,9 @@ class Publisher
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->Name;
+    }
 }

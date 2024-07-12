@@ -33,14 +33,14 @@ class PublisherController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/profil', '.profile', methods: ['GET'])]
+    #[Route('/{id}/details', '.details', methods: ['GET'])]
     public function show(?Publisher $publisher): Response|RedirectResponse
 
     {
         $publisherId = $publisher->getId();
 
         return $this->render(
-            'Users/publishers/profile.html.twig',
+            'Users/publishers/details.html.twig',
             [
                 'publisher' => $this->publiRepo->findOneById($publisherId)
             ]

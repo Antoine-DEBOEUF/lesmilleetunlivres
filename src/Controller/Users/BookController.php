@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-#[Route('/users/books', 'users.books')]
+#[Route('', 'books')]
 class BookController extends AbstractController
 
 {
@@ -31,15 +31,25 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/details', '.details', methods: ['GET'])]
-    public function show(?Book $book, Request $request): Response|RedirectResponse
+    #[Route('books/{id}/details', '.details', methods: ['GET', 'POST'])]
+    public function show(Request $request): Response|RedirectResponse
 
     {
         $commentary = new Commentaries;
         $form = $this->createForm(CommentaryType::class, $commentary);
         $form->handleRequest($request);
+        $book = $commentary->getBook();
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $user = $this->getUser();
+
+            $commentary
+                ->setUser($user)
+                ->setBook($book)
+                ->setEnable(1);
+
             $this->em->persist($commentary);
             $this->em->flush();
 
@@ -52,9 +62,9 @@ class BookController extends AbstractController
         $bookId = $book->getId();
 
         return $this->render(
-            'users/book/details.html.twig',
+            'users/books/details.html.twig',
             [
-                'user' => $this->bookRepo->findOneById($bookId),
+                'book' => $this->bookRepo->findOneById($bookId),
                 'form' => $form
             ]
         );

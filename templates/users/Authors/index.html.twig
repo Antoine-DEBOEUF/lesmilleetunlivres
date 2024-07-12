@@ -10,7 +10,7 @@
 	{% for author in authors %}
 
 		<div>
-			<a href="{{path('admin.author.details', {id: author.id})}}">
+			<a href="{{path('authors.details', {id: author.id})}}">
 				<h2>{{author.name}}
 					{{author.firstName}}</h2>
 			</a>

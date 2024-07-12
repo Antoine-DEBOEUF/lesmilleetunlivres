@@ -6,14 +6,14 @@
 
 {% block body %}
 	<h1>Modification d'une fiche auteur</h1>
-
+	<a href="{{path('admin.authors.details', {id: author.id})}}">Retour</a>
 	<div>
 		{{form_start(form)}}
 		{{form_widget(form)}}
 		<button type="submit">Enregistrer les modifications</button>
 		{{form_end(form)}}
 
-		<form action="{{path('admin.author.delete', {id:author.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette fiche?')">
+		<form action="{{path('admin.authors.delete', {id:author.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette fiche?')">
 			<input type="hidden" name="token" value="{{csrf_token('delete' ~ author.id)}}">
 			<button>Supprimer</button>
 		</form>

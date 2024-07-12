@@ -19,41 +19,37 @@ class CommentaryController extends AbstractController
 
     public function __construct(
         private EntityManagerInterface $em,
-        private CommentariesRepository $commentRepo,
+        private CommentariesRepository $commentRepo
+
     ) {
     }
 
-    #[Route('/', '.index', methods: ['GET'])]
-    public function index(?Book $book): Response|RedirectResponse
+
+    #[Route('/{id}/edit', '.edit', methods: ['GET', 'POST'])]
+    public function edit(?Commentaries $commentary, Request $request): Response|RedirectResponse
     {
-        if (!$book) {
-            $this->addFlash('error', 'Fiche livre non trouvée');
-            return $this->redirectToRoute('admin.books.index');
+
+        $commentaryId = $commentary->getId();
+
+        $form = $this->createForm(CommentaryType::class, $commentary, ['isAdmin' => true]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($commentary);
+            $this->em->flush();
+
+            $this->addFlash('success', 'Avis modifié avec succès');
+
+            return $this->redirectToRoute('admin.books.details');
         }
 
-        return $this->render('admin/commentaries/index.html.twig', [
-            'commentaires' => $book->getCommentaries()
-        ]);
-    }
-
-    #[Route('/create', '.create', methods: ['GET', 'POST'])]
-    public function create(Request $request): Response|RedirectResponse
-    { {
-            $commentary = new Commentaries;
-            $form = $this->createForm(CommentaryType::class, $commentary, ['isAdmin' => true]);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->em->persist($commentary);
-                $this->em->flush();
-
-                $this->addFlash('success', 'Votre commentaire a bien été publié');
-
-                return $this->redirectToRoute('admin.books.details');
-            }
-
-            return $this->render('admin/commentary/create.html.twig', ['form' => $form]);
-        }
+        return $this->render(
+            'Admin/commentary/edit.html.twig',
+            [
+                'form' => $form,
+                'commentary' => $this->commentRepo->findOneById($commentaryId)
+            ]
+        );
     }
 
     #[Route('/{id}/delete', '.delete', methods: ['POST'])]
@@ -72,5 +68,6 @@ class CommentaryController extends AbstractController
         } else {
             $this->addflash('error', 'token CSRF invalide');
         }
+        return $this->redirectToRoute('admin.books.details', ['id' => $comment->getBook()->getId()]);
     }
 }

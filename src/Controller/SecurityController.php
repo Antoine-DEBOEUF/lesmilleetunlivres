@@ -56,15 +56,6 @@ class SecurityController extends AbstractController
     #[Route('/redirect', name: 'app_redirect_after_login', methods: ['GET', 'POST'])]
     public function redirectAfterLogin(): Response
     {
-        $currentUser = $this->getUser();
-        if ($currentUser instanceof Users) {
-
-            if (in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
-                return $this->redirectToRoute('admin.books.index');
-            } else {
-
-                return $this->redirectToRoute('app.users.books.index');
-            }
-        }
+        return $this->redirectToRoute('books.index');
     }
 }

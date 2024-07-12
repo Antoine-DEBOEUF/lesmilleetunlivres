@@ -13,12 +13,12 @@
 		{% for book in author.books %}
 
 			<div>
-				<a href="{{path('admin.books.details', {id: book.id})}}">
+				<a href="{{path('books.details', {id: book.id})}}">
 					{{book.file}}
 					{{book.title}}
 					{{book.isbn}}
 					{{book.publisher}}
-					{{book.publishing_date}}
+					{{book.publishingDate}}
 				</a>
 
 			</div>

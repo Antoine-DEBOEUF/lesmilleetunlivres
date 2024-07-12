@@ -45,7 +45,7 @@ class BookType extends AbstractType
                 [
                     'label' => 'Auteur(s) :',
                     'class' => Author::class,
-                    'choice_label' => 'Name',
+                    'choice_label' => 'FullName',
                     'query_builder' => function (EntityRepository $er): QueryBuilder {
                         return $er->createQueryBuilder('a')
                             ->orderBy('a.Name', 'ASC');
@@ -154,7 +154,8 @@ class BookType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Book::class,
-            'sanitize_html' => true
+            'sanitize_html' => true,
+            'isAdmin' => false
         ]);
     }
 }

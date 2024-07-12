@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait DateTimeTrait
 {
     #[ORM\Column()]
-    private ?DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
 
 
@@ -17,7 +17,7 @@ trait DateTimeTrait
      *
      * @return ?DateTimeImmutable
      */
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -29,7 +29,7 @@ trait DateTimeTrait
      *
      * @return self
      */
-    public function setCreatedAt(?DateTimeImmutable $createdAt): self
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
 
@@ -39,9 +39,8 @@ trait DateTimeTrait
 
 
     #[ORM\PrePersist]
-    public function getAutoCreatedAt(): self
+    public function setAutoCreatedAt(): void
     {
         $this->createdAt = new DateTimeImmutable();
-        return $this;
     }
 }

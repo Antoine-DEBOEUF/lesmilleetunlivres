@@ -25,14 +25,6 @@ class PublisherController extends AbstractController
     ) {
     }
 
-    #[Route('', name: '.index')]
-    public function index(): Response
-    {
-        return $this->render('admin/publishers/index.html.twig', [
-            'publishers' => $this->publiRepo->findAll()
-        ]);
-    }
-
     #[Route('/create', '.create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response|RedirectResponse
     { {
@@ -51,20 +43,6 @@ class PublisherController extends AbstractController
 
             return $this->render('admin/publishers/create.html.twig', ['form' => $form]);
         }
-    }
-
-    #[Route('/{id}/profil', '.profile', methods: ['GET'])]
-    public function show(?Publisher $publisher): Response|RedirectResponse
-
-    {
-        $publisherId = $publisher->getId();
-
-        return $this->render(
-            'admin/publishers/profile.html.twig',
-            [
-                'publisher' => $this->publiRepo->findOneById($publisherId)
-            ]
-        );
     }
 
     #[Route('/{id}/edit', '.edit', methods: ['GET', 'POST'])]

@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/admin/Author', 'admin.authors')]
+#[Route('/admin/authors', 'admin.authors')]
 class AuthorController extends AbstractController
 
 {
@@ -20,14 +20,6 @@ class AuthorController extends AbstractController
         private AuthorRepository $authorRepo,
         private EntityManagerInterface $em
     ) {
-    }
-
-    #[Route('', name: '.index')]
-    public function index(): Response
-    {
-        return $this->render('admin/authors/index.html.twig', [
-            'authors' => $this->authorRepo->findAll()
-        ]);
     }
 
     #[Route('/create', '.create', methods: ['GET', 'POST'])]
@@ -50,20 +42,6 @@ class AuthorController extends AbstractController
         }
     }
 
-    #[Route('/{id}/profil', '.profile', methods: ['GET'])]
-    public function show(?Author $author): Response|RedirectResponse
-
-    {
-        $authorId = $author->getId();
-
-        return $this->render(
-            'admin/authors/profile.html.twig',
-            [
-                'author' => $this->authorRepo->findOneById($authorId)
-            ]
-        );
-    }
-
     #[Route('/{id}/edit', '.edit', methods: ['GET', 'POST'])]
     public function edit(?Author $author, Request $request): Response|RedirectResponse
     {
@@ -73,7 +51,7 @@ class AuthorController extends AbstractController
         }
         $authorId = $author->getId();
 
-        $form = $this->createForm(AuthorType::class, $author, ['isAdmin' => true]);
+        $form = $this->createForm(AuthorType::class, $author);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

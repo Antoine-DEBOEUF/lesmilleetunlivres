@@ -30,14 +30,14 @@ class AuthorController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/profil', '.profile', methods: ['GET'])]
+    #[Route('/{id}/details', '.details', methods: ['GET'])]
     public function show(?Author $author): Response|RedirectResponse
 
     {
         $authorId = $author->getId();
 
         return $this->render(
-            'Users/authors/profile.html.twig',
+            'Users/authors/details.html.twig',
             [
                 'author' => $this->authorRepo->findOneById($authorId)
             ]

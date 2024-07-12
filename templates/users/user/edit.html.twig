@@ -12,10 +12,12 @@
 		<h2>{{user.username}}</h2>
 
 
-		{{form_start(form)}}
-		{{form_widget(form)}}
-		<button type="submit">Enregister les modifications</button>
-		{{form_end(form)}}
+		{% if user == app.user %}
+			{{form_start(form)}}
+			{{form_widget(form)}}
+			<button type="submit">Enregister les modifications</button>
+			{{form_end(form)}}
+		{% endif %}
 
 	</div>
 {% endblock %}

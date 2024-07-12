@@ -2,31 +2,34 @@
 
 {% block title %}
 	Fiche livre
+	{{book.title}}
 	{{parent()}}
 {% endblock %}
 
 {% block body %}
-	<h1>Fiche livre</h1>
+	<h1>Fiche
+		{{book.title}}</h1>
 
 	<div>
-		<h2>{{book.title}}</h2>
+
 		{% for categorie in book.categories %}
 
 			{{categorie.title }}
 
 		{% endfor %}
+		<aside>{{book.file}}</aside>
+		Auteur(s) :
+		{% for author in book.author %}
 
-		{% for author in book.authors %}
-
-			{{author.name}}
-			{{author.firstName}}
+			<a href="{{path('authors.details', {id: author.id})}}">{{author.name}}
+				{{author.firstName}}</a>
 
 		{% endfor %}
-
-		{{book.publisher}}
-		{{book.publishing_date}}
-		{{book.isbn}}
-		{{book.synopsis}}
+		Editeur :
+		<a href "{{path('publishers.details', {id: book.publisher.id})}}">{{book.publisher}}</a>
+		Paru en :{{book.publishingDate}}
+		ISBN :{{book.isbn}}
+		Synopsis :{{book.synopsis}}
 
 
 	</div>
@@ -34,17 +37,40 @@
 	<div>
 		<h2>Avis</h2>
 
-		{% for commentary in book.commentaries %}
-			{{commentary.user}}
-			{{commentary.createdAt}}
-			{{commentary.content}}
-			<a href="">Signaler</a>
-		{% endfor %}
 
-		Rédiger un Avis
-		{{form_start(form)}}
-		{{form_widget(form)}}
-		<button type="submit">Publier</button>
-		{{form_end(form)}}
+		{% for commentary in book.commentaries %}
+
+			{% if app.user is defined and app.user.enable == true and commentary.user == app.user %}
+				Votre avis pour ce livre
+				{{commentary.createdAt|format_datetime('full','medium', locale='fr')}}
+				{{commentary.content}}
+				<a href="{{path('commentaries.edit', {id: commentary.id})}}">Modifier</a>
+
+			{% endif %}
+			{% if commentary.enable == true %}
+
+				{% include "components/commentCard.html.twig" %}
+				{% else %}
+			{% endif %}
+
+
+			{% if app.user is defined and app.user.enable == true and commentary.user != app.user %}
+
+				Rédiger un avis
+				{{form_start(form)}}
+				{{form_widget(form)}}
+				<button type="submit">Publier</button>
+				{{form_end(form)}}
+
+
+			{% elseif app.user is defined and app.user.enable == false %}
+
+				Ce compte est actuellement suspendu et ne peut pas poster d'avis
+
+			{% elseif app.user == false %}
+
+				<a href="app.login">Connectez-vous pour poster un avis</a>
+			{% endif %}
+		{% endfor %}
 	</div>
 {% endblock %}

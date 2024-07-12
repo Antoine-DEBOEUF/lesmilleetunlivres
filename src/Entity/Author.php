@@ -89,4 +89,9 @@ class Author
 
         return $this;
     }
+
+    public function getFullName(): string
+    {
+        return "$this->Name $this->firstName";
+    }
 }
