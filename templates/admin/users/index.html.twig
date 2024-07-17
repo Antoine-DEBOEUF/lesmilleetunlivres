@@ -7,21 +7,31 @@
 
 	<h1>Liste des utilisateurs</h1>
 
-	<div>
+	<div id="userList">
 
 		{% for user in users %}
 
-			<a href="{{path('admin.users.profile', {id: user.id})}}">
-				<div>
-					<h2>{{user.username}}</h2>
+			<a href="{{path('users.profile', {id: user.id})}}">
+				<div id="userCard">
+					<aside>
+						{% if user.avatarImg %}
+							{{user.avatarImg}}
+						{% else %}
+							<img src="/images/avatar-default-icon.png" alt="Avatar non défini" width="60vw" height="60vh">
+						{% endif %}
 
-					{% for role in user.roles %}
+					</aside>
+					<div id="userCardIntel">
+						<h2>{{user.username}}</h2>
 
-						{{role == 'ROLE_ADMIN'? 'Admin': 'Utilisateur'}}
+						{% for role in user.roles %}
 
-					{% endfor %}
+							<div>{{role == 'ROLE_ADMIN'? 'Admin': 'Utilisateur'}}</div>
 
-					{{user.enable ? '' : 'Compte suspendu'}}
+						{% endfor %}
+
+						<div>{{user.enable ? 'Compte actif' : 'Compte suspendu'}}</div>
+					</div>
 
 				</div>
 			</a>

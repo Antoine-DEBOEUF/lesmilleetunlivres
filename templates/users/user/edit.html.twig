@@ -12,7 +12,7 @@
 		<h2>{{user.username}}</h2>
 
 
-		{% if user == app.user %}
+		{% if user.username == app.user %}
 			{{form_start(form)}}
 			{{form_widget(form)}}
 			<button type="submit">Enregister les modifications</button>

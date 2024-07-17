@@ -5,17 +5,16 @@
 
 {% block body %}
 	<h1>Index des éditeurs</h1>
+	<div id="publishersList">
 
+		{% for publisher in publishers %}
 
-	{% for publisher in publishers %}
+			<div class="publisherCard">
+				<a href="{{path('publishers.details', {id: publisher.id})}}">
+					<button>{{publisher.name}}</button>
+				</a>
+			</div>
 
-		<div>
-
-			<h2>{{publisher.name}}
-			</h2>
-
-		</div>
-
-	{% endfor %}
-
+		{% endfor %}
+	</div>
 {% endblock %}

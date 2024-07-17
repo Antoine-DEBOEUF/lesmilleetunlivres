@@ -8,31 +8,46 @@
 {% block body %}
 	<h1>Profil utilisateur</h1>
 
-	<div>
+	<div id="userProfile">
+
+		<aside>
+			{% if user.avatarImg %}
+				{{user.avatarImg}}
+			{% else %}
+				<img src="/images/avatar-default-icon.png" alt="Avatar non défini" width="60vw" height="60vh">
+			{% endif %}
+
+		</aside>
+
 		<h2>{{user.username}}</h2>
 		{% for role in user.roles %}
 
 			{{role == 'ROLE_ADMIN' ? 'Administrateur' : 'Utilisateur' }}
 
 		{% endfor %}
-		<a href="{{path('users.profile', {id: user.id})}}">
-			<button>Mettre à jour votr profil</button>
-		</a>
+
+		{% if app.user == user %}
+
+			<a href="{{path('users.edit', {id: user.id})}}">
+				<button>Mettre à jour votre profil</button>
+			</a>
+		{% endif %}
 
 		{% if is_granted('ROLE_ADMIN') %}
 
-			{{form_start(form)}}
+			{{form_start(form, {'attr':{'id':'formAdmin'}})}}
 			{{form_row(form.roles)}}
 			{{form_row(form.enable)}}
 			<button type="submit">Valider</button>
 			{{form_end(form)}}
+
 		{% endif %}
 
 		{% if user == app.user %}
 
 			<form action="{{path('users.delete', {id:user.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre profil?')">
 				<input type="hidden" name="token" value="{{csrf_token('delete' ~ user.id)}}">
-				<button>Supprimer votre compte</button>
+				<button class="btnDelete">Supprimer votre compte</button>
 			</form>
 
 		{% endif %}

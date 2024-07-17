@@ -6,16 +6,19 @@
 {% block body %}
 	<h1>Index des auteurs</h1>
 
+	<div id="authorsList">
+		{% for author in authors %}
 
-	{% for author in authors %}
+			<div class="authorCard">
+				<a href="{{path('authors.details', {id: author.id})}}">
+					<button class="btnInternLink">
+						{{author.name}}
+						{{author.firstName}}
+					</button>
+				</a>
+			</div>
 
-		<div>
-			<a href="{{path('authors.details', {id: author.id})}}">
-				<h2>{{author.name}}
-					{{author.firstName}}</h2>
-			</a>
-		</div>
-
-	{% endfor %}
+		{% endfor %}
+	</div>
 
 {% endblock %}

@@ -3,10 +3,8 @@
 namespace App\Controller\Users;
 
 use App\Entity\Author;
-use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -26,7 +24,7 @@ class AuthorController extends AbstractController
     public function index(): Response
     {
         return $this->render('Users/authors/index.html.twig', [
-            'authors' => $this->authorRepo->findAll()
+            'authors' => $this->authorRepo->findAll(),
         ]);
     }
 

@@ -2,14 +2,10 @@
 
 namespace App\Controller\Users;
 
-use App\Entity\Author;
-use App\Form\AuthorType;
+
 use App\Entity\Publisher;
-use App\Form\PublisherType;
-use App\Repository\AuthorRepository;
 use App\Repository\PublisherRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -39,10 +35,12 @@ class PublisherController extends AbstractController
     {
         $publisherId = $publisher->getId();
 
+
         return $this->render(
             'Users/publishers/details.html.twig',
             [
-                'publisher' => $this->publiRepo->findOneById($publisherId)
+                'publisher' => $this->publiRepo->findOneById($publisherId),
+
             ]
         );
     }

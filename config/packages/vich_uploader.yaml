@@ -23,9 +23,18 @@ vich_uploader:
     type: attribute
 
   mappings:
+    avatarImg:
+      uri_prefix: /images/avatars
+      upload_destination: "%kernel.project_dir%/public/images/avatars"
+      namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+      inject_on_load: false
+      delete_on_update: true
+      delete_on_remove: true
+
     images:
-      uri_prefix: /images
-      upload_destination: image_fs
+      uri_prefix: /images/bookcovers
+      upload_destination: "%kernel.project_dir%/public/images/bookcovers"
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
 
       inject_on_load: false

@@ -4,23 +4,38 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Fiche éditeur</h1>
+	<h1>Fiche éditeur
+		{{publisher.name}}
+	</h1>
 
-	<div>
-		<h2>{{publisher.name}}</h2>
+	<div id="publisherView">
+
 
 		{% for book in publisher.books %}
 
-			<div>
-				<a href="{{path('admin.books.details', {id: book.id})}}">
-					{% for author in book.authors %}
-						{{author.name}}{{author.firstName}}
+			<div class="bookCard">
+				<a href="{{path('books.details', {id: book.id})}}">
+					<div class="bookCardContent">
+						<aside>
+							{% if book.bookCover %}
+								{{book.bookCover}}
+							{% else %}
+								<img src="/images/defaultImage.jpg" alt="Couverture du livre indisponible" width="130" height="200">
+							{% endif %}
+						</aside>
+						<div class="bookCardIntel">
+							<h2 class="bookCardTitle">{{book.title}}</h2>
+							<p>
+								{% for author in book.author %}
+									{{author.name}}
+									{{author.firstName}};
 
-					{% endfor %}
-					{{book.file}}
-					{{book.title}}
-					{{book.isbn}}
-					{{book.publishing_date}}
+								{% endfor %}
+							</p>
+							<p>Paru en :{{book.publishingDate}}</p>
+							<p>ISBN :{{book.isbn}}</p>
+						</div>
+					</div>
 				</a>
 
 			</div>

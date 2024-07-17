@@ -2,20 +2,25 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\DateTimeTrait;
-use App\Entity\Traits\EnableTrait;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\EnableTrait;
 use App\Repository\UsersRepository;
+use App\Entity\Traits\DateTimeTrait;
+use Vich\UploaderBundle\Entity\File;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
 #[UniqueEntity(['username', 'email'])]
 #[ORM\HasLifecycleCallbacks]
+#[Vich\Uploadable]
+
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use DateTimeTrait;
@@ -67,6 +72,15 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Commentaries::class, mappedBy: 'user')]
     private Collection $commentaries;
+
+    #[Vich\UploadableField(mapping: 'avatarImg', fileNameProperty: 'imageName', size: 'imageSize')]
+    private ?File $avatarImg = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $imageName = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $imageSize = null;
 
     public function __construct()
     {
@@ -248,6 +262,66 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
                 $commentary->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAvatarImg(): ?string
+    {
+        return $this->avatarImg;
+    }
+
+    public function setAvatarImg(?File $avatarImg): static
+    {
+        $this->avatarImg = $avatarImg;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of imageName
+     *
+     * @return ?string
+     */
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    /**
+     * Set the value of imageName
+     *
+     * @param ?string $imageName
+     *
+     * @return self
+     */
+    public function setImageName(?string $imageName): self
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of imageSize
+     *
+     * @return ?int
+     */
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    /**
+     * Set the value of imageSize
+     *
+     * @param ?int $imageSize
+     *
+     * @return self
+     */
+    public function setImageSize(?int $imageSize): self
+    {
+        $this->imageSize = $imageSize;
 
         return $this;
     }

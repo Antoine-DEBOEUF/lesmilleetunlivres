@@ -1,0 +1,33 @@
+#formLogin{
+
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.loginDiv{
+
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+
+#username{
+    border-radius: 5px;
+    height:25px;
+    padding: 5px;
+}
+
+#password{
+    border-radius: 5px;
+    height: 25px;
+    padding: 5px;
+}
+
+#registerLink{
+   text-align: center;
+}

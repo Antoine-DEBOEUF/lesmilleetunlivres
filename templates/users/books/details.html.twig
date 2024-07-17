@@ -7,70 +7,91 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Fiche
-		{{book.title}}</h1>
+	<h1>{{book.title}}</h1>
 
-	<div>
-
+	<div class="bookCategList">
 		{% for categorie in book.categories %}
 
 			{{categorie.title }}
 
 		{% endfor %}
-		<aside>{{book.file}}</aside>
-		Auteur(s) :
-		{% for author in book.author %}
+	</div>
+	<div id="bookView">
+		<aside>
+			{% if book.bookCover %}
+				{{book.bookCover}}
 
-			<a href="{{path('authors.details', {id: author.id})}}">{{author.name}}
-				{{author.firstName}}</a>
+			{% else %}
+				<img src="/images/defaultImage.jpg" alt="Image de la couverture indisponible" width="120vw" height="200vh">
+			{% endif %}
 
-		{% endfor %}
-		Editeur :
-		<a href "{{path('publishers.details', {id: book.publisher.id})}}">{{book.publisher}}</a>
-		Paru en :{{book.publishingDate}}
-		ISBN :{{book.isbn}}
-		Synopsis :{{book.synopsis}}
+		</aside>
+		<div id="bookIntel">
+			<p class="bookIntelItem">Auteur(s) :
+				{% for author in book.author %}
 
+					<a href="{{path('authors.details', {id: author.id})}}">{{author.name}}
+						{{author.firstName}}</a>
 
+				{% endfor %}
+			</p>
+			<p class="bookIntelItem">
+				Editeur :
+				<a href "{{path('publishers.details', {id: book.publisher.id})}}">{{book.publisher}}</a>
+			</p>
+			<p class="bookIntelItem">
+				Paru en :{{book.publishingDate}}
+			</p>
+			<p class="bookIntelItem">
+				ISBN :{{book.isbn}}
+			</p>
+			<p class="bookIntelItem">
+				Synopsis :{{book.synopsis}}
+			</p>
+
+		</div>
 	</div>
 
-	<div>
+	<div id="bookCommentaries">
 		<h2>Avis</h2>
 
 
 		{% for commentary in book.commentaries %}
 
-			{% if app.user is defined and app.user.enable == true and commentary.user == app.user %}
-				Votre avis pour ce livre
-				{{commentary.createdAt|format_datetime('full','medium', locale='fr')}}
-				{{commentary.content}}
-				<a href="{{path('commentaries.edit', {id: commentary.id})}}">Modifier</a>
-
+			{% if app.user and app.user.enable == 1 and commentary.user == app.user %}
+				<div class="bookComment">
+					Votre avis pour ce livre
+					{{commentary.createdAt|format_datetime('full','medium', locale='fr')}}
+					{{commentary.content}}
+					<a href="{{path('commentaries.edit', {id: commentary.id})}}">Modifier</a>
+				</div>
 			{% endif %}
-			{% if commentary.enable == true %}
-
-				{% include "components/commentCard.html.twig" %}
+			{% if commentary.enable == 1 %}
+				<div class="bookComment">
+					{% include "components/commentCard.html.twig" %}
+				</div>
 				{% else %}
 			{% endif %}
 
+		{% endfor %}
+		{% if app.user %}
+			{% if app.user.enable == 1 and commentary.user != app.user %}
+				<div id="commentForm">
+					Rédiger un avis
+					{{form_start(form)}}
+					{{form_widget(form)}}
+					<button type="submit">Publier</button>
+					{{form_end(form)}}
+				</div>
 
-			{% if app.user is defined and app.user.enable == true and commentary.user != app.user %}
-
-				Rédiger un avis
-				{{form_start(form)}}
-				{{form_widget(form)}}
-				<button type="submit">Publier</button>
-				{{form_end(form)}}
-
-
-			{% elseif app.user is defined and app.user.enable == false %}
+			{% elseif app.user.enable == 0 %}
 
 				Ce compte est actuellement suspendu et ne peut pas poster d'avis
-
-			{% elseif app.user == false %}
-
-				<a href="app.login">Connectez-vous pour poster un avis</a>
 			{% endif %}
-		{% endfor %}
+		{% else %}
+
+			<a href="app.login">Connectez-vous pour poster un avis</a>
+		{% endif %}
+
 	</div>
 {% endblock %}

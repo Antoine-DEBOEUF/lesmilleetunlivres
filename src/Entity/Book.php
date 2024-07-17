@@ -68,7 +68,7 @@ class Book
 
     #[Vich\UploadableField(mapping: 'images', fileNameProperty: 'imageName', size: 'fileSize')]
     #[Assert\Image(detectCorrupted: true)]
-    private ?File $File = null;
+    private ?File $bookCover = null;
 
     #[ORM\Column(nullable: true)]
     private ?string $imageName = null;
@@ -243,9 +243,9 @@ class Book
      *
      * @return ?File
      */
-    public function getFile(): ?File
+    public function getBookCover(): ?File
     {
-        return $this->File;
+        return $this->bookCover;
     }
 
     /**
@@ -255,9 +255,9 @@ class Book
      *
      * @return self
      */
-    public function setFile(?File $File): self
+    public function setBookCover(?File $bookCover): self
     {
-        $this->File = $File;
+        $this->bookCover = $bookCover;
 
         return $this;
     }

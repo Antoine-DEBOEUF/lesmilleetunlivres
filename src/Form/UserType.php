@@ -6,6 +6,7 @@ use App\Entity\Book;
 use App\Entity\Users;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -65,12 +66,25 @@ class UserType extends AbstractType
                 ],
                 'second_options' => ['label' => "Confirmation du mot de passe :"]
 
-            ]);
+            ])
+            ->add(
+                'avatarImg',
+                VichImageType::class,
+                [
+                    'label' => 'Votre avatar',
+                    'required' => false,
+                    'allow_delete' => true,
+                    'delete_label' => 'Supprimer l\'avatar actuel',
+                    'image_uri' => true,
+                    'download_uri' => false,
+                ]
+            );
 
         if ($options['isAdmin']) {
             $builder
                 ->remove('password')
                 ->remove('username')
+                ->remove('avatarImg')
                 ->remove('email')
                 ->add(
                     'roles',

@@ -1,0 +1,33 @@
+.bookCategList{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+}
+
+#bookView{
+    display:flex;
+    flex-direction: row;
+    margin-bottom: 4vh;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#bookIntel{
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+
+.bookIntelItem{
+    margin: 5px;
+}
+
+#bookCommentaries{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5vh;
+}

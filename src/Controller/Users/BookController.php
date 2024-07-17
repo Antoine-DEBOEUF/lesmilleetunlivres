@@ -32,13 +32,12 @@ class BookController extends AbstractController
     }
 
     #[Route('books/{id}/details', '.details', methods: ['GET', 'POST'])]
-    public function show(Request $request): Response|RedirectResponse
+    public function show(?Book $book, Request $request): Response|RedirectResponse
 
     {
         $commentary = new Commentaries;
         $form = $this->createForm(CommentaryType::class, $commentary);
         $form->handleRequest($request);
-        $book = $commentary->getBook();
 
         if ($form->isSubmitted() && $form->isValid()) {
 

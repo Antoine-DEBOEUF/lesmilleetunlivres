@@ -65,7 +65,7 @@ class UserController extends AbstractController
         }
 
         return $this->render(
-            'Users/edit.html.twig',
+            'Users/user/edit.html.twig',
             [
                 'form' => $form,
                 'user' => $this->userRepo->findOneById($userId)

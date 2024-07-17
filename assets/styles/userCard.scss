@@ -1,0 +1,20 @@
+#userList{
+    display:flex;
+    flex-direction: column;
+    
+}
+
+#userCard{
+    border: 1px solid;
+    border-radius: 5px;
+    margin: 3vh 3vw 3vh 3vw;
+    padding: 3vh 0vw 3vh 5vw ;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+   
+}
+
+#userCardIntel{
+    margin-left: 5vw;
+}

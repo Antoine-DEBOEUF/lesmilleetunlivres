@@ -127,7 +127,7 @@ class BookType extends AbstractType
             ])
 
             ->add(
-                'File',
+                'bookCover',
                 VichImageType::class,
                 [
                     'label' => 'Page de couverture :',

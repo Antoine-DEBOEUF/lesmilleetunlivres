@@ -15,8 +15,8 @@
 				<a href="{{ path('books.details', {id: book.id})}}">
 					<div class="bookCardContent">
 						<aside>
-							{% if book.file %}
-								{{book.file}}
+							{% if book.bookCover %}
+								{{book.bookCover}}
 							{% else %}
 								<img src="/images/defaultImage.jpg" alt="Couverture du livre indisponible" width="130" height="200">
 							{% endif %}
@@ -50,8 +50,8 @@
 				<a href="{{ path('books.details', {id: book.id})}}">
 					<div class="bookCardContent">
 						<aside>
-							{% if book.file %}
-								{{book.file}}
+							{% if book.bookCover %}
+								{{book.bookCover}}
 							{% else %}
 								<img src="/images/defaultImage.jpg" alt="Couverture du livre indisponible" width="130" height="200">
 							{% endif %}

@@ -1,8 +1,10 @@
 .bookCard{
     display:flex;
-    border: 0.1em solid;
-    border-radius: 1em ;
-    margin-bottom: 3em;
+    border: 1px solid;
+    border-radius: 15px ;
+    margin-bottom: 3vh;
+    margin-top: 2vh;
+    padding: 2vh 3vw 2vh 3vw;
 }
 
 
@@ -15,7 +17,7 @@
 }
 
 .bookCardTitle{
-    text-align: center;
+
 }
 
 .bookCardIntel{
@@ -26,3 +28,7 @@
     color: black;
 }
 
+p{
+margin-left: 3vw;
+margin-top: 3vh;
+}
