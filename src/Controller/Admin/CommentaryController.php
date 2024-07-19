@@ -40,14 +40,15 @@ class CommentaryController extends AbstractController
 
             $this->addFlash('success', 'Avis modifié avec succès');
 
-            return $this->redirectToRoute('admin.books.details');
+            return $this->redirectToRoute('books.details', ['id' => $commentary->getBook()->getId()]);
         }
 
         return $this->render(
-            'Admin/commentary/edit.html.twig',
+            'admin/commentary/edit.html.twig',
             [
                 'form' => $form,
-                'commentary' => $this->commentRepo->findOneById($commentaryId)
+                'commentary' => $this->commentRepo->findOneById($commentaryId),
+                'book' => $commentary->getBook()
             ]
         );
     }
@@ -57,7 +58,7 @@ class CommentaryController extends AbstractController
     {
         if (!$comment) {
             $this->addFlash('error', 'Commentaire non trouvé');
-            return $this->redirectToRoute('admin.books.index');
+            return $this->redirectToRoute('books.index');
         }
 
         if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('token'))) {
@@ -68,6 +69,6 @@ class CommentaryController extends AbstractController
         } else {
             $this->addflash('error', 'token CSRF invalide');
         }
-        return $this->redirectToRoute('admin.books.details', ['id' => $comment->getBook()->getId()]);
+        return $this->redirectToRoute('books.details', ['id' => $comment->getBook()->getId()]);
     }
 }

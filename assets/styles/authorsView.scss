@@ -5,3 +5,18 @@
     
 }
 
+#authorsList{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    justify-content: center;
+}
+
+.authorCard{
+    display: flex;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    margin-left: auto;
+    margin-right: auto;
+}

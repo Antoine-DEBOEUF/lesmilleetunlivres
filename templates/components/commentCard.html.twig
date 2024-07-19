@@ -1,38 +1,40 @@
-<div>
-	{{commentary.user.username}}
-	{{commentary.createdAt | format_datetime('full', 'medium', locale='fr')}}
+<div class="comment">
+	<div class="commentHeader">
+		<p>{{commentary.user.username}}</p>
+		<p>{{commentary.createdAt | format_datetime('full', 'medium', locale='fr')}}</p>
 
-</div>
-{% if app.user and is_granted ('ROLE_ADMIN')  %}
-	{{commentary.enable ? 'Visibilité publique' : 'Visibilité restreinte'}}
-
-{% endif %}
-
-<div>
-	{{commentary.content}}
-</div>
-
-{% if app.user and is_granted ('ROLE_ADMIN') %}
-
-	{% if app.user == commentary.user  %}
-		<a href="{{path('commentaries.edit', {id: commentary.id})}}">Modifier</a>
+	</div>
+	{% if app.user and is_granted ('ROLE_ADMIN')  %}
+		{{commentary.enable ? 'Visibilité publique' : 'Visibilité restreinte'}}
 
 	{% endif %}
 
+	<div>
+		{{commentary.content}}
+	</div>
 
-	<form action="{{ path('admin.commentaries.delete', {id:commentary.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet avis?)">
-		<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
-		<button>Supprimer</button>
-	</form>
+	{% if app.user and is_granted ('ROLE_ADMIN') %}
 
-{% elseif app.user and app.user == commentary.user %}
+		{% if app.user == commentary.user  %}
+			<a href="{{path('admin.commentaries.edit', {id: commentary.id})}}">Modifier</a>
 
-	<a href="{{path('commentaries.edit', {id: commentary.id})}}">Modifier</a>
-
-	<form action="{{ path('commentaries.delete', {id:commentary.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet avis?)">
-		<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
-		<button>Supprimer</button>
-	</form>
+		{% endif %}
 
 
-{% endif %}
+		<form action="{{ path('admin.commentaries.delete', {id:commentary.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet avis?)">
+			<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
+			<button class="btnDelete">Supprimer</button>
+		</form>
+
+	{% elseif app.user and app.user == commentary.user %}
+
+		<a href="{{path('commentaries.edit', {id: commentary.id})}}">Modifier</a>
+
+		<form action="{{ path('commentaries.delete', {id:commentary.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet avis?)">
+			<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
+			<button class="btnDelete">Supprimer</button>
+		</form>
+
+
+	{% endif %}
+</div>

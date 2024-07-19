@@ -5,6 +5,9 @@
     margin-bottom: 3vh;
     margin-top: 2vh;
     padding: 2vh 3vw 2vh 3vw;
+    width : 80vw;
+    justify-content: center;
+    font-size: smaller;
 }
 
 
@@ -13,10 +16,7 @@
     display:flex;
     flex-direction: row;
     justify-content: space-between;
-
-}
-
-.bookCardTitle{
+    
 
 }
 
@@ -26,9 +26,15 @@
     align-items: baseline;
     justify-content: flex-start;
     color: black;
+    
 }
 
-p{
-margin-left: 3vw;
-margin-top: 3vh;
+.bookCard > p{
+    margin-left: 3vw;
+    margin-top: 3vh;
+}
+
+.bookCardIntel > p{
+    margin-left: 3vw;
+    margin-top: 2vh;  
 }

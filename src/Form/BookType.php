@@ -35,7 +35,8 @@ class BookType extends AbstractType
                     'required' => false,
                     'constraints' => [
                         new NotBlank(['message' => 'Renseignez le titre du livre'])
-                    ]
+                    ],
+                    'attr' => ['class' => 'formItem'],
                 ]
             )
 
@@ -56,7 +57,8 @@ class BookType extends AbstractType
                     'by_reference' => true,
                     'constraints' => [
                         new NotBlank(['message' => 'Sélectionnez un auteur à associer à ce livre'])
-                    ]
+                    ],
+                    'attr' => ['class' => 'formItem'],
                 ]
             )
 
@@ -77,7 +79,8 @@ class BookType extends AbstractType
                     'by_reference' => true,
                     'constraints' => [
                         new NotBlank(['message' => 'Sélectionnez l\'éditeur de ce livre'])
-                    ]
+                    ],
+                    'attr' => ['class' => 'formItem'],
                 ]
             )
 
@@ -87,7 +90,8 @@ class BookType extends AbstractType
                 [
                     'label' => 'ISBN :',
                     'required' => false,
-                    'constraints' => [new NotBlank(['message' => 'Renseignez l\'ISBN du livre'])]
+                    'constraints' => [new NotBlank(['message' => 'Renseignez l\'ISBN du livre'])],
+                    'attr' => ['class' => 'formItem'],
                 ]
             )
 
@@ -97,7 +101,8 @@ class BookType extends AbstractType
                 [
                     'label' => 'Paru en :',
                     'required' => false,
-                    'constraints' => [new NotBlank(['message' => 'Renseignez l\'année de parution du livre'])]
+                    'constraints' => [new NotBlank(['message' => 'Renseignez l\'année de parution du livre'])],
+                    'attr' => ['class' => 'formItem'],
                 ]
             )
 
@@ -107,7 +112,8 @@ class BookType extends AbstractType
                 [
                     'label' => 'Synopsis :',
                     'required' => false,
-                    'attr' => ['rows' => 10]
+                    'attr' => ['rows' => 10],
+                    'attr' => ['class' => 'formItem'],
 
                 ]
             )
@@ -123,7 +129,8 @@ class BookType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
                 'by_reference' => true,
-                'autocomplete' => true
+                'autocomplete' => true,
+                'attr' => ['class' => 'formItem'],
             ])
 
             ->add(
@@ -135,7 +142,9 @@ class BookType extends AbstractType
                     'allow_delete' => true,
                     'delete_label' => 'Supprimer la couverture actuelle',
                     'image_uri' => true,
+                    'attr' => ['class' => 'formItem'],
                     'download_uri' => false,
+
                 ]
             )
 
@@ -145,7 +154,8 @@ class BookType extends AbstractType
                 CheckboxType::class,
                 [
                     'label' => 'Publier la fiche',
-                    'required' => false
+                    'required' => false,
+                    'attr' => ['class' => 'formItem'],
                 ]
             );
     }

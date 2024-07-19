@@ -20,7 +20,11 @@ class CommentaryType extends AbstractType
                 [
                     'label' => false,
                     'required' => true,
-                    'attr' => ['placeholder' => 'Cliquez ici pour rédiger votre texte', 'rows' => 10]
+                    'attr' => [
+                        'placeholder' => 'Cliquez ici pour rédiger votre texte',
+                        'rows' => 10,
+                        'class' => 'formItem'
+                    ]
                 ]
             );
 
@@ -31,7 +35,8 @@ class CommentaryType extends AbstractType
                     CheckboxType::class,
                     [
                         'label' => 'Visibilité publique ?',
-                        'required' => false
+                        'required' => false,
+                        'attr' => ['class' => 'formItem'],
                     ]
                 );
         };

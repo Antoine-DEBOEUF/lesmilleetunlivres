@@ -24,7 +24,8 @@ class AuthorType extends AbstractType
                     'required' => false,
                     'constraints' => [
                         new NotBlank(['message' => 'Renseignez le nom de l\'auteur'])
-                    ]
+                    ],
+                    'attr' => ['class' => 'formItem'],
                 ]
             )
             ->add(
@@ -32,7 +33,8 @@ class AuthorType extends AbstractType
                 TextType::class,
                 [
                     'label' => 'Prénom(s) :',
-                    'required' => false
+                    'required' => false,
+                    'attr' => ['class' => 'formItem'],
                 ]
             );
     }

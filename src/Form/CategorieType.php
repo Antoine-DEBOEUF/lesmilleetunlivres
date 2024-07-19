@@ -19,7 +19,8 @@ class CategorieType extends AbstractType
                 'label' => 'Nom de la catégorie :',
                 'constraints' => [
                     new NotBlank(['message' => 'Renseignez le nom de la catégorie'])
-                ]
+                ],
+                'attr' => ['class' => 'formItem'],
             ]);
     }
 

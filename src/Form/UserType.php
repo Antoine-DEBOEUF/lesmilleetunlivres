@@ -2,12 +2,10 @@
 
 namespace App\Form;
 
-use App\Entity\Book;
 use App\Entity\Users;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichImageType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -32,7 +30,8 @@ class UserType extends AbstractType
                     'required' => false,
                     'constraints' => [
                         new NotBlank(['message' => 'Choisissez un nom d\'utilisateur'])
-                    ]
+                    ],
+                    'attr' => ['class' => 'formItem'],
                 ]
             )
             ->add(
@@ -43,7 +42,8 @@ class UserType extends AbstractType
                     'required' => false,
                     'constraints' => [
                         new NotBlank(['message' => 'Renseignez un email'])
-                    ]
+                    ],
+                    'attr' => ['class' => 'formItem'],
                 ]
             )
             ->add('password', RepeatedType::class, [
@@ -54,6 +54,7 @@ class UserType extends AbstractType
                 'invalid_message' => "les mots de passe ne correspondent pas",
                 'first_options' => [
                     'label' => "Mot de passe :",
+                    'attr' => ['class' => 'formItem'],
                     'constraints' => [
                         new Assert\NotBlank(['message' => 'Indiquez un mot de passe']),
                         new Assert\Length([
@@ -64,7 +65,10 @@ class UserType extends AbstractType
                         )
                     ]
                 ],
-                'second_options' => ['label' => "Confirmation du mot de passe :"]
+                'second_options' => [
+                    'label' => "Confirmation du mot de passe :",
+                    'attr' => ['class' => 'formItem'],
+                ]
 
             ])
             ->add(
@@ -77,6 +81,7 @@ class UserType extends AbstractType
                     'delete_label' => 'Supprimer l\'avatar actuel',
                     'image_uri' => true,
                     'download_uri' => false,
+                    'attr' => ['class' => 'formItem'],
                 ]
             );
 
@@ -97,6 +102,7 @@ class UserType extends AbstractType
                         ],
                         'expanded' => true,
                         'multiple' => true,
+                        'attr' => ['class' => 'formItem'],
                     ]
                 )
                 ->add(
@@ -104,7 +110,8 @@ class UserType extends AbstractType
                     CheckboxType::class,
                     [
                         'label' => 'Actif (décochez la case pour suspendre le compte) :',
-                        'required' => false
+                        'required' => false,
+                        'attr' => ['class' => 'formItem'],
 
                     ]
                 );

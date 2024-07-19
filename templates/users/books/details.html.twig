@@ -7,6 +7,8 @@
 {% endblock %}
 
 {% block body %}
+	<a href="{{path('books.index')}}">Retour à l'index</a>
+
 	<h1>{{book.title}}</h1>
 
 	<div class="bookCategList">
@@ -48,50 +50,72 @@
 			<p class="bookIntelItem">
 				Synopsis :{{book.synopsis}}
 			</p>
-
+			<a href="{{path('admin.books.edit', {id: book.id})}}">Modifier la fiche</a>
 		</div>
 	</div>
 
 	<div id="bookCommentaries">
 		<h2>Avis</h2>
 
+		{% if book.commentaries is empty %}
+			Il n'y a pas encore d'avis pour ce livre
 
-		{% for commentary in book.commentaries %}
+			{% if app.user %}
+				{% if app.user.enable == 1 %}
+					<div class="commentForm">
+						<p>Rédiger un avis</p>
+						{{form_start(form, {'attr':{'class':'formAdmin'}})}}
+						{{form_widget(form)}}
+						<button type="submit">Publier</button>
+						{{form_end(form)}}
+					</div>
 
-			{% if app.user and app.user.enable == 1 and commentary.user == app.user %}
-				<div class="bookComment">
-					Votre avis pour ce livre
-					{{commentary.createdAt|format_datetime('full','medium', locale='fr')}}
-					{{commentary.content}}
-					<a href="{{path('commentaries.edit', {id: commentary.id})}}">Modifier</a>
-				</div>
-			{% endif %}
-			{% if commentary.enable == 1 %}
-				<div class="bookComment">
-					{% include "components/commentCard.html.twig" %}
-				</div>
-				{% else %}
-			{% endif %}
+				{% elseif app.user.enable == 0 %}
 
-		{% endfor %}
-		{% if app.user %}
-			{% if app.user.enable == 1 and commentary.user != app.user %}
-				<div id="commentForm">
-					Rédiger un avis
-					{{form_start(form)}}
-					{{form_widget(form)}}
-					<button type="submit">Publier</button>
-					{{form_end(form)}}
-				</div>
+					Ce compte est actuellement suspendu et ne peut pas poster d'avis
+				{% endif %}
+			{% else %}
 
-			{% elseif app.user.enable == 0 %}
-
-				Ce compte est actuellement suspendu et ne peut pas poster d'avis
+				<a href="{{path('app.login')}}">Connectez-vous pour poster un avis</a>
 			{% endif %}
 		{% else %}
 
-			<a href="app.login">Connectez-vous pour poster un avis</a>
-		{% endif %}
 
+			{% for commentary in book.commentaries %}
+
+				{% if app.user and app.user.enable == 1 and commentary.user == app.user %}
+					<div class="bookComment">
+						<p>Votre avis pour ce livre</p>
+						{% include "components/commentCard.html.twig" %}
+					</div>
+				{% endif %}
+				{% if commentary.enable == 1 and commentary.user != app.user %}
+					<div class="bookComment">
+						{% include "components/commentCard.html.twig" %}
+					</div>
+					{% else %}
+				{% endif %}
+
+				{% if app.user %}
+					{% if app.user.enable == 1 and commentary.user != app.user %}
+						<div class="commentForm">
+							Rédiger un avis
+							{{form_start(form)}}
+							{{form_widget(form)}}
+							<button type="submit">Publier</button>
+							{{form_end(form)}}
+						</div>
+
+					{% elseif app.user.enable == 0 %}
+
+						Ce compte est actuellement suspendu et ne peut pas poster d'avis
+					{% endif %}
+				{% else %}
+
+					<a href="{{path('app.login')}}">Connectez-vous pour poster un avis</a>
+				{% endif %}
+
+			{% endfor %}
+		{% endif %}
 	</div>
 {% endblock %}

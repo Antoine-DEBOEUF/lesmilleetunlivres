@@ -6,14 +6,13 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Profil utilisateur</h1>
+	<h1>Profil utilisateur
+		{{user.username}}</h1>
+	<a href="{{path('users.profile', {id: user.id})}}">Retour au profil</a>
 
 	<div>
-		<h2>{{user.username}}</h2>
-
-
-		{% if user.username == app.user %}
-			{{form_start(form)}}
+		{% if user == app.user %}
+			{{form_start(form, {'attr': {'class':'formAdmin'}})}}
 			{{form_widget(form)}}
 			<button type="submit">Enregister les modifications</button>
 			{{form_end(form)}}

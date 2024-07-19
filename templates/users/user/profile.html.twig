@@ -35,7 +35,7 @@
 
 		{% if is_granted('ROLE_ADMIN') %}
 
-			{{form_start(form, {'attr':{'id':'formAdmin'}})}}
+			{{form_start(form, {'attr':{'class':'formAdmin'}})}}
 			{{form_row(form.roles)}}
 			{{form_row(form.enable)}}
 			<button type="submit">Valider</button>

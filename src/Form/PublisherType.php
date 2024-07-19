@@ -22,7 +22,8 @@ class PublisherType extends AbstractType
                     'required' => false,
                     'constraints' => [
                         new NotBlank(['message' => 'Renseignez le nom de l\'éditeur'])
-                    ]
+                    ],
+                    'attr' => ['class' => 'formItem'],
                 ]
             );
     }

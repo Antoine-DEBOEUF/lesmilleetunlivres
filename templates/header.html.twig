@@ -5,7 +5,7 @@
 
 				{% if app.user %}
 
-					<a href="{{path('users.profile')}}">
+					<a href="{{path('users.profile', {id: app.user.id})}}">
 						<button>Profil</button>
 					</a>
 

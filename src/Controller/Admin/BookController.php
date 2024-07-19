@@ -62,7 +62,7 @@ class BookController extends AbstractController
 
             $this->addFlash('success', 'Fiche du livre modifiée avec succès');
 
-            return $this->redirectToRoute('admin.books.index');
+            return $this->redirectToRoute('books.details', ['id' => $book->getId()]);
         }
 
         return $this->render(
