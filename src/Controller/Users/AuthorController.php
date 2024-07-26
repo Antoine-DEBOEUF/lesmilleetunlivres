@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/Author', 'authors')]
+#[Route('/author', 'authors')]
 class AuthorController extends AbstractController
 
 {

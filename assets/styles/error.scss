@@ -1,0 +1,21 @@
+.error403{
+display: flex;
+justify-content: baseline;
+flex-direction: column;
+flex-wrap: wrap;
+max-width: 80vw;
+width: max-content;
+border: 1px solid;
+border-radius: 15px;
+padding: 1%;
+margin-top: 5%;
+}
+
+.error403 > p{
+    margin: 2%;
+}
+
+.link403{
+    text-decoration: underline;
+    color: blue;
+}

@@ -1,4 +1,4 @@
-ul{
+ #navbarHeader{
     display: flex;
     flex-direction: row;
     list-style-type: none;
@@ -9,14 +9,8 @@ ul{
     z-index: 1;
 }
 
-a{
+.headerLink{
     text-decoration: none;
-}
-
-button{
-    padding:1em;
-    border-radius: 1em;
-    margin-top: 2em;
 }
 
 #menu_header{
@@ -26,7 +20,7 @@ button{
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
-    width: 65vw;
+    width: fit-content;
     height: max-content;
     margin: auto;
     margin-top : 3em;
@@ -52,6 +46,6 @@ button{
 
 .show{
     
-    transform: translate(112vw);
+    transform: translate(100vw);
     transition-duration: 1s;
 }

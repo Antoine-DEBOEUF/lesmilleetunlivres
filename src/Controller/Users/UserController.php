@@ -40,7 +40,9 @@ class UserController extends AbstractController
             'Users/user/profile.html.twig',
             [
                 'user' => $id,
-                'form' => $form
+                'form' => $form,
+                'commentaries' => $this->userRepo->findOneById($id)->getCommentaries(),
+                'comments' => $this->userRepo->findOneById($id)->getPostComments()
             ]
         );
     }

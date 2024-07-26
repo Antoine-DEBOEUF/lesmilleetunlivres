@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Accueil |
+	{{parent()}}
+{% endblock %}
+
+{% block body %}
+	<section>
+		<h1>Articles</h1>
+
+		{% for post in posts %}
+
+			{% if post.enable == 1 %}
+
+				<div class="articleCard">
+					<a href="{{path('post.details', {id: post.id})}}">
+						<div class="articleContent">
+							<h2>{{post.title}}</h2>
+							<div class="articleHeader">
+								<p>Par :
+									{{post.author}}</p>
+								<p>{{post.createdAt | format_datetime('full', 'medium', locale='fr')}}</p>
+							</div>
+							{% if is_granted('ROLE_ADMIN') %}
+								<p>Visibilité : publique</p>
+							{% endif %}
+						</div>
+					</a>
+				</div>
+			{%  elseif post.enable == 0 and is_granted('ROLE_ADMIN') %}
+				<div class="articleCard">
+					<a href="{{path('post.details', {id: post.id})}}">
+						<div class="articleContent">
+							<h2>{{post.title}}</h2>
+							<div class="articleHeader">
+								<p>Par :
+									{{post.author}}</p>
+								<p>{{post.createdAt | format_datetime('full', 'medium', locale='fr')}}</p>
+							</div>
+							<p>Visibilité : restreinte</p>
+						</div>
+					</a>
+				</div>
+			{% endif %}
+
+		{% endfor %}
+	</section>
+{% endblock %}

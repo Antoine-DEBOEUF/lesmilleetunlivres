@@ -1,14 +1,16 @@
 {% extends "base.html.twig" %}
 
-{% block title %}S'inscrire
+{% block title %}S'inscrire |
 	{{parent()}}
 {% endblock %}
 
 {% block body %}
-	<h1>Inscription</h1>
+	<section>
+		<h1>Inscription</h1>
 
-	{{form_start(form, {'attr':{'class':'formAdmin'}})}}
-	{{form_widget(form)}}
-	<button type="submit">S'inscrire</button>
-	{{form_end(form)}}
+		{{form_start(form, {'attr':{'class':'formAdmin'}})}}
+		{{form_widget(form)}}
+		<button type="submit">S'inscrire</button>
+		{{form_end(form)}}
+	</section>
 {% endblock %}

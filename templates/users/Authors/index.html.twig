@@ -1,24 +1,26 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Index des auteurs
+{% block title %}Index des auteurs |
+	{{parent()}}
 {% endblock %}
 
 {% block body %}
-	<h1>Index des auteurs</h1>
+	<section>
+		<h1>Index des auteurs</h1>
 
-	<div id="authorsList">
-		{% for author in authors %}
+		<div id="authorsList">
+			{% for author in authors %}
 
-			<div class="authorCard">
-				<a href="{{path('authors.details', {id: author.id})}}">
-					<button class="btnInternLink">
-						{{author.name}}
-						{{author.firstName}}
-					</button>
-				</a>
-			</div>
+				<div class="authorCard">
+					<a href="{{path('authors.details', {id: author.id})}}">
+						<button class="btnInternLink">
+							{{author.name}}
+							{{author.firstName}}
+						</button>
+					</a>
+				</div>
 
-		{% endfor %}
-	</div>
-
+			{% endfor %}
+		</div>
+	</section>
 {% endblock %}

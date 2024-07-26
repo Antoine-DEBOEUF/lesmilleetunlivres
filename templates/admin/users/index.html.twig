@@ -1,43 +1,44 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Utilisateurs
+{% block title %}Utilisateurs |
+	{{parent()}}
 {% endblock %}
 
 {% block body %}
+	<section>
+		<h1>Liste des utilisateurs</h1>
 
-	<h1>Liste des utilisateurs</h1>
+		<div id="userList">
 
-	<div id="userList">
+			{% for user in users %}
 
-		{% for user in users %}
+				<a href="{{path('users.profile', {id: user.id})}}">
+					<div id="userCard">
+						<aside>
+							{% if user.avatarImg %}
+								{{user.avatarImg}}
+							{% else %}
+								<img src="/images/avatar-default-icon.png" alt="Avatar non défini" width="60vw" height="60vh">
+							{% endif %}
 
-			<a href="{{path('users.profile', {id: user.id})}}">
-				<div id="userCard">
-					<aside>
-						{% if user.avatarImg %}
-							{{user.avatarImg}}
-						{% else %}
-							<img src="/images/avatar-default-icon.png" alt="Avatar non défini" width="60vw" height="60vh">
-						{% endif %}
+						</aside>
+						<div id="userCardIntel">
+							<h2>{{user.username}}</h2>
 
-					</aside>
-					<div id="userCardIntel">
-						<h2>{{user.username}}</h2>
+							{% for role in user.roles %}
 
-						{% for role in user.roles %}
+								<div>{{role == 'ROLE_ADMIN'? 'Admin': 'Utilisateur'}}</div>
 
-							<div>{{role == 'ROLE_ADMIN'? 'Admin': 'Utilisateur'}}</div>
+							{% endfor %}
 
-						{% endfor %}
+							<div>{{user.enable ? 'Compte actif' : 'Compte suspendu'}}</div>
+						</div>
 
-						<div>{{user.enable ? 'Compte actif' : 'Compte suspendu'}}</div>
 					</div>
+				</a>
 
-				</div>
-			</a>
+			{% endfor %}
 
-		{% endfor %}
-
-	</div>
-
+		</div>
+	</section>
 {% endblock %}

@@ -1,0 +1,101 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{post.title}}
+	|
+	{{parent()}}
+{% endblock %}
+
+{% block body %}
+	<section>
+
+		<h1>{{post.title}}</h1>
+		<div class="postView">
+			<a href="{{path('post.index')}}">Retour</a>
+
+			<div class="postHeader">
+				<p>Par :
+					{{post.author}}</p>
+				<p>{{post.createdAt | format_datetime('full', 'medium', locale='fr')}}</p>
+			</div>
+			<div class="postContent">{{post.content}}</div>
+
+			{% if is_granted('ROLE_ADMIN') %}
+				<a href="{{path('admin.post.edit', {id:post.id})}}">
+					<button>Modifier</button>
+				</a>
+
+				<form action="{{ path('admin.post.delete', {id:post.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article?)">
+					<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
+					<button class="btnDelete">Supprimer</button>
+				</form>
+
+
+			{% endif %}
+
+			<div id="Commentaries">
+				<h2>Commentaires</h2>
+
+				{% if post.postComments is empty %}
+					Il n'y a pas encore de commentaires pour cet article
+
+					{% if app.user %}
+						{% if app.user.enable == 1 %}
+							<div class="commentForm">
+								<p>Rédiger un commentaire</p>
+								{{form_start(form, {'attr':{'class':'formAdmin'}})}}
+								{{form_widget(form)}}
+								<button type="submit">Publier</button>
+								{{form_end(form)}}
+							</div>
+
+						{% elseif app.user.enable == 0 %}
+
+							Ce compte est actuellement suspendu et ne peut pas poster de commentaires
+						{% endif %}
+					{% else %}
+
+						<a href="{{path('app.login')}}">Connectez-vous pour commenter l'article</a>
+					{% endif %}
+				{% else %}
+
+
+					{% for comment in post.postComments %}
+
+						{% if app.user and app.user.enable == 1 and comment.author == app.user %}
+							<div class="Comment">
+								<p>Votre commentaire pour cet article</p>
+								{% include "components/postCommentCard.html.twig" %}
+							</div>
+						{% endif %}
+						{% if comment.enable == 1 and comment.author != app.user %}
+							<div class="Comment">
+								{% include "components/postCommentCard.html.twig" %}
+							</div>
+							{% else %}
+						{% endif %}
+
+						{% if app.user %}
+							{% if app.user.enable == 1 and comment.author != app.user %}
+								<div class="commentForm">
+									Rédiger un commentaire
+									{{form_start(form, {'attr':{'class':'formAdmin'}})}}
+									{{form_widget(form)}}
+									<button type="submit">Publier</button>
+									{{form_end(form)}}
+								</div>
+
+							{% elseif app.user.enable == 0 %}
+
+								Ce compte est actuellement suspendu et ne peut pas poster de commentaire
+							{% endif %}
+						{% else %}
+
+							<a href="{{path('app.login')}}">Connectez-vous pour commenter</a>
+						{% endif %}
+
+					{% endfor %}
+				{% endif %}
+			</div>
+		</section>
+	{% endblock %}

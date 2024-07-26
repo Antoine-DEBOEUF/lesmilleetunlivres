@@ -56,6 +56,6 @@ class SecurityController extends AbstractController
     #[Route('/redirect', name: 'app_redirect_after_login', methods: ['GET', 'POST'])]
     public function redirectAfterLogin(): Response
     {
-        return $this->redirectToRoute('books.index');
+        return $this->redirectToRoute('post.index');
     }
 }

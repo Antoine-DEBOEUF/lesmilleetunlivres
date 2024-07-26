@@ -1,22 +1,24 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-	Profil
+	Modifier votre profil |
 	{{parent()}}
 {% endblock %}
 
 {% block body %}
-	<h1>Profil utilisateur
-		{{user.username}}</h1>
-	<a href="{{path('users.profile', {id: user.id})}}">Retour au profil</a>
+	<section>
+		<h1>Profil utilisateur
+			{{user.username}}</h1>
+		<a href="{{path('users.profile', {id: user.id})}}">Retour au profil</a>
 
-	<div>
-		{% if user == app.user %}
-			{{form_start(form, {'attr': {'class':'formAdmin'}})}}
-			{{form_widget(form)}}
-			<button type="submit">Enregister les modifications</button>
-			{{form_end(form)}}
-		{% endif %}
+		<div>
+			{% if user == app.user %}
+				{{form_start(form, {'attr': {'class':'formAdmin'}})}}
+				{{form_widget(form)}}
+				<button type="submit">Enregister les modifications</button>
+				{{form_end(form)}}
+			{% endif %}
 
-	</div>
+		</div>
+	</section>
 {% endblock %}

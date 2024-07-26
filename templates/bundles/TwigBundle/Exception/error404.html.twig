@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Page non trouvée |
+	{{parent()}}
+{% endblock %}
+
+{% block body %}
+	<section>
+		<h1>Page introuvable (erreur
+			{{status_code}})</h1>
+
+		<p class="error403">
+			La page que vous essayez d'atteindre ne semble pas exister...
+		</p>
+
+		<a href="{{path('post.index')}}">
+			<button>Retour à l'accueil</button>
+		</a>
+	</section>
+
+{% endblock %}

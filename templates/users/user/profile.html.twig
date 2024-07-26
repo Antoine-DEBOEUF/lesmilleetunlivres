@@ -1,23 +1,21 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-	Profil
+	Profil |
 	{{parent()}}
 {% endblock %}
 
 {% block body %}
-	<h1>Profil utilisateur</h1>
+	<section>
+		<h1>Profil utilisateur</h1>
 
-	<div id="userProfile">
 
-		<aside>
-			{% if user.avatarImg %}
-				{{user.avatarImg}}
-			{% else %}
-				<img src="/images/avatar-default-icon.png" alt="Avatar non défini" width="60vw" height="60vh">
-			{% endif %}
+		{% if user.avatarImg %}
+			{{user.avatarImg}}
+		{% else %}
+			<img src="/images/avatar-default-icon.png" alt="Avatar non défini" width="10%" height="10%">
+		{% endif %}
 
-		</aside>
 
 		<h2>{{user.username}}</h2>
 		{% for role in user.roles %}
@@ -26,6 +24,7 @@
 
 		{% endfor %}
 
+
 		{% if app.user == user %}
 
 			<a href="{{path('users.edit', {id: user.id})}}">
@@ -33,7 +32,81 @@
 			</a>
 		{% endif %}
 
-		{% if is_granted('ROLE_ADMIN') %}
+
+		{% if user.enable == 0 %}
+			<p>Ce compte est actuellement suspendu</p>
+		{% endif %}
+
+
+		<h2>Mes avis</h2>
+
+		{% for avis in commentaries %}
+
+
+			{% if avis.user.id == app.user.id %}
+				<div class="comment">
+					<div class="commentHeader">
+						<a href="{{path('books.details', {id: avis.book.id})}}">
+							<p>{{avis.book.title}}</p>
+						</a>
+						<p>{{avis.createdAt | format_datetime('full', 'medium', locale='fr')}}</p>
+					</div>
+					<p>{{avis.content}}</p>
+					{% if user.enable == 1 %}
+
+						<a href="{{path('commentaries.edit', {id: avis.id})}}">
+							<button>Modifier</button>
+						</a>
+
+						<form action="{{ path('commentaries.delete', {id:avis.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?)">
+							<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
+							<button class="btnDelete">Supprimer</button>
+						</form>
+						{% else %}
+
+					{% endif %}
+				</div>
+			{% endif %}
+
+
+		{% endfor %}
+
+
+		<h2>Mes commentaires</h2>
+
+		{% for comment in comments %}
+			{% if comment.author.id == app.user.id %}
+				<div class="comment">
+					<div class="commentHeader">
+						<a href="{{path('post.details', {id: comment.post.id})}}">
+							<p>{{comment.post.title}}</p>
+						</a>
+						<p>{{comment.title}}</p>
+						<p>{{comment.createdAt | format_datetime('full', 'medium', locale='fr')}}</p>
+					</div>
+					<p>{{comment.content}}</p>
+					{% if user.enable == 1 %}
+
+						<a href="{{path('post.comment.edit', {id: comment.id})}}">
+							<button>Modifier</button>
+						</a>
+
+						<form action="{{ path('post.comment.delete', {id:comment.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?)">
+							<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
+							<button class="btnDelete">Supprimer</button>
+						</form>
+						{% else %}
+
+					{% endif %}
+				</div>
+
+			{% endif %}
+
+
+		{% endfor %}
+
+
+		{% if is_granted('ROLE_ADMIN') and app.user != user %}
 
 			{{form_start(form, {'attr':{'class':'formAdmin'}})}}
 			{{form_row(form.roles)}}
@@ -51,5 +124,6 @@
 			</form>
 
 		{% endif %}
-	</div>
+	</section>
+
 {% endblock %}

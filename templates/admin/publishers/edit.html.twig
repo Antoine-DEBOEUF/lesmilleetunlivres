@@ -1,23 +1,24 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Editeurs
+{% block title %}Editeurs |
 	{{parent()}}
 {% endblock %}
 
 {% block body %}
-	<h1>Modification d'une fiche éditeur</h1>
+	<section>
+		<h1>Modification d'une fiche éditeur</h1>
 
-	<div>
-		{{form_start(form)}}
-		{{form_widget(form)}}
-		<button type="submit">Enregistrer les modifications</button>
-		{{form_end(form)}}
+		<div>
+			{{form_start(form)}}
+			{{form_widget(form)}}
+			<button type="submit">Enregistrer les modifications</button>
+			{{form_end(form)}}
 
-		<form action="{{path('admin.publishers.delete', {id:publishre.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette fiche?')">
-			<input type="hidden" name="token" value="{{csrf_token('delete' ~ publisher.id)}}">
-			<button>Supprimer</button>
-		</form>
+			<form action="{{path('admin.publishers.delete', {id:publishre.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette fiche?')">
+				<input type="hidden" name="token" value="{{csrf_token('delete' ~ publisher.id)}}">
+				<button>Supprimer</button>
+			</form>
 
-	</div>
-
+		</div>
+	</section>
 {% endblock %}

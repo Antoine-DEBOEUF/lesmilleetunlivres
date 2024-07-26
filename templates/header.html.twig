@@ -1,17 +1,17 @@
 <header>
 	<nav>
-		<ul>
+		<ul id="navbarHeader">
 			<li>
 
 				{% if app.user %}
 
-					<a href="{{path('users.profile', {id: app.user.id})}}">
+					<a class="headerLink" href="{{path('users.profile', {id: app.user.id})}}">
 						<button>Profil</button>
 					</a>
 
 				{% else %}
 
-					<a href="{{path('app.login')}}">
+					<a class="headerLink" href="{{path('app.login')}}">
 						<button>Se connecter</button>
 					</a>
 
@@ -32,42 +32,65 @@
 	<h2>Menu</h2>
 	{% if app.user and is_granted('ROLE_ADMIN') %}
 
-		<a href="/logout">Déconnexion</a>
+		<a class="menu_header_item" href="/logout">Déconnexion</a>
+
+		<a class="menu_header_item" href="/">Accueil</a>
+
+		<div class="menu_header_section">
+			<h3>Articles</h3>
+			<a class="menu_header_item" href="{{path('post.index')}}">Index</a>
+			<a class="menu_header_item" href="{{path('admin.post.create')}}">Créer un article</a>
+		</div>
+
 		<div class="menu_header_section">
 			<h3>Livres</h3>
 
 			<a class="menu_header_item" href="{{path('books.index')}}">Index</a>
 			<a class="menu_header_item" href="{{path('admin.books.create')}}">Ajouter une fiche livre</a>
 		</div>
+
 		<div class="menu_header_section">
 			<h3>Utilisateurs</h3>
 			<a class="menu_header_item" href="{{path('admin.users.index')}}">Index</a>
 		</div>
+
 		<div class="menu_header_section">
 			<h3>Auteurs</h3>
-			<a class="menu_header_item" href="{path('authors.index')}">Index</a>
+			<a class="menu_header_item" href="{{path('authors.index')}}">Index</a>
 			<a class="menu_header_item" href="{{path('admin.authors.create')}}">Ajouter une fiche auteur</a>
 		</div>
+
 		<div class="menu_header_section">
 			<h3>Editeurs</h3>
 			<a class="menu_header_item" href="{{path('publishers.index')}}">Index</a>
 			<a class="menu_header_item" href="{{path('admin.publishers.create')}}">Ajouter une fiche éditeur</a>
 		</div>
+
 	{% else %}
+
 		{% if app.user %}
 			<a href="/logout">Déconnexion</a>
 		{% endif %}
+
+		<div class="menu_header_section">
+			<h3>Articles</h3>
+			<a class="menu_header_item" href="{{path('post.index')}}">Index</a>
+		</div>
+
 		<div class="menu_header_section">
 			<h3>Livres</h3>
 			<a class="menu_header_item" href="{{path('books.index')}}">Index</a>
 		</div>
+
 		<div class="menu_header_section">
 			<h3>Auteurs</h3>
 			<a class="menu_header_item" href="{{path('authors.index')}}">Index</a>
 		</div>
+
 		<div class="menu_header_section">
 			<h3>Editeurs</h3>
 			<a class="menu_header_item" href="{{path('publishers.index')}}">Index</a>
 		</div>
+
 	{% endif %}
 </div>

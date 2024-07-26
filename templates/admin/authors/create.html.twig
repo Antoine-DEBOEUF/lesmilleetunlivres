@@ -1,18 +1,19 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Auteurs
+{% block title %}Auteurs |
 	{{parent()}}
 {% endblock %}
 
 {% block body %}
-	<h1>Création d'une fiche auteur</h1>
+	<section>
+		<h1>Création d'une fiche auteur</h1>
 
-	<div>
-		{{form_start(form, {'attr':{'class':'formAdmin'}})}}
-		{{form_widget(form)}}
-		<button type="submit">Créer la fiche</button>
-		{{form_end(form)}}
+		<div>
+			{{form_start(form, {'attr':{'class':'formAdmin'}})}}
+			{{form_widget(form)}}
+			<button type="submit">Créer la fiche</button>
+			{{form_end(form)}}
 
-	</div>
-
+		</div>
+	</section>
 {% endblock %}

@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Book;
 use App\Entity\Commentaries;
 use App\Form\CommentaryType;
 use Doctrine\ORM\EntityManagerInterface;

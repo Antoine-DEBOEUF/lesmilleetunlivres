@@ -3,6 +3,7 @@
     border: solid 1px;
     border-radius: 20px;
     padding: 15px;
+    width: 60vw;
 
 }
 
@@ -11,4 +12,26 @@
     flex-direction: column;
     margin-bottom: 3vh;
     
+}
+
+#Commentaries{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5vh;
+    
+}
+
+.Comment > p{
+    text-align: center;
+}
+
+.commentForm > p{
+    text-align: center;
+}
+
+.commentContent{
+    display: flex;
+    flex-wrap: wrap;
 }

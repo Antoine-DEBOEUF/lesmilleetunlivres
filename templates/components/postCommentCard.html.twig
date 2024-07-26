@@ -1,0 +1,44 @@
+<div class="comment">
+	<div class="commentHeader">
+		<p>{{comment.author.username}}</p>
+		<p>{{comment.createdAt | format_datetime('full', 'medium', locale='fr')}}</p>
+
+	</div>
+	{% if app.user and is_granted ('ROLE_ADMIN')  %}
+		{{comment.enable ? 'Visibilité publique' : 'Visibilité restreinte'}}
+
+	{% endif %}
+
+	<article class="commentContent">
+		{{comment.content}}
+	</article>
+
+	{% if app.user and is_granted ('ROLE_ADMIN') %}
+
+		{% if app.user == comment.author  %}
+			<a href="{{path('admin.post.comment.edit', {id: comment.id})}}">
+				<button>Modifier</button>
+			</a>
+
+		{% endif %}
+
+
+		<form action="{{ path('admin.post.comment.delete', {id:comment.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?)">
+			<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
+			<button class="btnDelete">Supprimer</button>
+		</form>
+
+	{% elseif app.user and app.user == comment.user %}
+
+		<a href="{{path('post.comment.edit', {id: comment.id})}}">
+			<button>Modifier</button>
+		</a>
+
+		<form action="{{ path('post.comment.delete', {id:comment.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?)">
+			<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
+			<button class="btnDelete">Supprimer</button>
+		</form>
+
+
+	{% endif %}
+</div>

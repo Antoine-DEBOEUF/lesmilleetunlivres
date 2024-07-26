@@ -82,6 +82,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $imageSize = null;
 
+    /**
+     * @var Collection<int, Post>
+     */
+    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'author')]
+    private Collection $posts;
+
+    /**
+     * @var Collection<int, PostComment>
+     */
+    #[ORM\OneToMany(targetEntity: PostComment::class, mappedBy: 'author')]
+    private Collection $postComments;
+
     public function __construct()
     {
         $this->banLists = new ArrayCollection();
@@ -89,6 +101,8 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         $this->enable = true;
         $this->roles = ['ROLE_USER'];
         $this->commentaries = new ArrayCollection();
+        $this->posts = new ArrayCollection();
+        $this->postComments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -324,5 +338,70 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         $this->imageSize = $imageSize;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Post>
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): static
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts->add($post);
+            $post->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): static
+    {
+        if ($this->posts->removeElement($post)) {
+            // set the owning side to null (unless already changed)
+            if ($post->getAuthor() === $this) {
+                $post->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostComment>
+     */
+    public function getPostComments(): Collection
+    {
+        return $this->postComments;
+    }
+
+    public function addPostComment(PostComment $postComment): static
+    {
+        if (!$this->postComments->contains($postComment)) {
+            $this->postComments->add($postComment);
+            $postComment->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostComment(PostComment $postComment): static
+    {
+        if ($this->postComments->removeElement($postComment)) {
+            // set the owning side to null (unless already changed)
+            if ($postComment->getAuthor() === $this) {
+                $postComment->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->username;
     }
 }

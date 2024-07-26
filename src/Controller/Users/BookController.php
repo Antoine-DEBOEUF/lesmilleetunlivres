@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-#[Route('', 'books')]
+#[Route('books', 'books')]
 class BookController extends AbstractController
 
 {
@@ -31,7 +31,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('books/{id}/details', '.details', methods: ['GET', 'POST'])]
+    #[Route('/{id}/details', '.details', methods: ['GET', 'POST'])]
     public function show(?Book $book, Request $request): Response|RedirectResponse
 
     {

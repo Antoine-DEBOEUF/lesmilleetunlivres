@@ -1,47 +1,50 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Fiche éditeur
+{% block title %}Fiche éditeur |
+	{{parent()}}
 {% endblock %}
 
 {% block body %}
-	<h1>Fiche éditeur
-		{{publisher.name}}
-	</h1>
-	<a href="{{path('publishers.index')}}">Retour à l'index</a>
+	<section>
+		<h1>Fiche éditeur
+			{{publisher.name}}
+		</h1>
+		<a href="{{path('publishers.index')}}">Retour à l'index</a>
 
-	<div id="publisherView">
+		<div id="publisherView">
 
 
-		{% for book in publisher.books %}
+			{% for book in publisher.books %}
 
-			<div class="bookCard">
-				<a href="{{path('books.details', {id: book.id})}}">
-					<div class="bookCardContent">
-						<aside>
-							{% if book.bookCover %}
-								{{book.bookCover}}
-							{% else %}
-								<img src="/images/defaultImage.jpg" alt="Couverture du livre indisponible" width="130" height="200">
-							{% endif %}
-						</aside>
-						<div class="bookCardIntel">
-							<h2 class="bookCardTitle">{{book.title}}</h2>
-							<p>
-								{% for author in book.author %}
-									{{author.name}}
-									{{author.firstName}};
+				<div class="bookCard">
+					<a href="{{path('books.details', {id: book.id})}}">
+						<div class="bookCardContent">
+							<aside>
+								{% if book.bookCover %}
+									{{book.bookCover}}
+								{% else %}
+									<img src="/images/defaultImage.jpg" alt="Couverture du livre indisponible" width="130" height="200">
+								{% endif %}
+							</aside>
+							<div class="bookCardIntel">
+								<h2 class="bookCardTitle">{{book.title}}</h2>
+								<p>
+									{% for author in book.author %}
+										{{author.name}}
+										{{author.firstName}};
 
-								{% endfor %}
-							</p>
-							<p>Paru en :{{book.publishingDate}}</p>
-							<p>ISBN :{{book.isbn}}</p>
+									{% endfor %}
+								</p>
+								<p>Paru en :{{book.publishingDate}}</p>
+								<p>ISBN :{{book.isbn}}</p>
+							</div>
 						</div>
-					</div>
-				</a>
+					</a>
 
-			</div>
+				</div>
 
-		{% endfor %}
+			{% endfor %}
 
-	</div>
+		</div>
+	</section>
 {% endblock %}

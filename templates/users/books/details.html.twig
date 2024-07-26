@@ -1,106 +1,72 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-	Fiche livre
+	Fiche
 	{{book.title}}
+	|
 	{{parent()}}
 {% endblock %}
 
 {% block body %}
-	<a href="{{path('books.index')}}">Retour à l'index</a>
+	<section>
+		<a href="{{path('books.index')}}">Retour à l'index</a>
 
-	<h1>{{book.title}}</h1>
+		<h1>{{book.title}}</h1>
 
-	<div class="bookCategList">
-		{% for categorie in book.categories %}
+		<div class="bookCategList">
+			{% for categorie in book.categories %}
 
-			{{categorie.title }}
+				{{categorie.title }}
 
-		{% endfor %}
-	</div>
-	<div id="bookView">
-		<aside>
-			{% if book.bookCover %}
-				{{book.bookCover}}
-
-			{% else %}
-				<img src="/images/defaultImage.jpg" alt="Image de la couverture indisponible" width="120vw" height="200vh">
-			{% endif %}
-
-		</aside>
-		<div id="bookIntel">
-			<p class="bookIntelItem">Auteur(s) :
-				{% for author in book.author %}
-
-					<a href="{{path('authors.details', {id: author.id})}}">{{author.name}}
-						{{author.firstName}}</a>
-
-				{% endfor %}
-			</p>
-			<p class="bookIntelItem">
-				Editeur :
-				<a href "{{path('publishers.details', {id: book.publisher.id})}}">{{book.publisher}}</a>
-			</p>
-			<p class="bookIntelItem">
-				Paru en :{{book.publishingDate}}
-			</p>
-			<p class="bookIntelItem">
-				ISBN :{{book.isbn}}
-			</p>
-			<p class="bookIntelItem">
-				Synopsis :{{book.synopsis}}
-			</p>
-			<a href="{{path('admin.books.edit', {id: book.id})}}">Modifier la fiche</a>
+			{% endfor %}
 		</div>
-	</div>
+		<div id="bookView">
+			<aside>
+				{% if book.bookCover %}
+					{{book.bookCover}}
 
-	<div id="bookCommentaries">
-		<h2>Avis</h2>
-
-		{% if book.commentaries is empty %}
-			Il n'y a pas encore d'avis pour ce livre
-
-			{% if app.user %}
-				{% if app.user.enable == 1 %}
-					<div class="commentForm">
-						<p>Rédiger un avis</p>
-						{{form_start(form, {'attr':{'class':'formAdmin'}})}}
-						{{form_widget(form)}}
-						<button type="submit">Publier</button>
-						{{form_end(form)}}
-					</div>
-
-				{% elseif app.user.enable == 0 %}
-
-					Ce compte est actuellement suspendu et ne peut pas poster d'avis
+				{% else %}
+					<img src="/images/defaultImage.jpg" alt="Image de la couverture indisponible" width="120vw" height="200vh">
 				{% endif %}
-			{% else %}
 
-				<a href="{{path('app.login')}}">Connectez-vous pour poster un avis</a>
-			{% endif %}
-		{% else %}
+			</aside>
+			<div id="bookIntel">
+				<p class="bookIntelItem">Auteur(s) :
+					{% for author in book.author %}
 
+						<a href="{{path('authors.details', {id: author.id})}}">{{author.name}}
+							{{author.firstName}}</a>
 
-			{% for commentary in book.commentaries %}
+					{% endfor %}
+				</p>
+				<p class="bookIntelItem">
+					Editeur :
+					<a href "{{path('publishers.details', {id: book.publisher.id})}}">{{book.publisher}}</a>
+				</p>
+				<p class="bookIntelItem">
+					Paru en :{{book.publishingDate}}
+				</p>
+				<p class="bookIntelItem">
+					ISBN :{{book.isbn}}
+				</p>
+				<p class="bookIntelItem">
+					Synopsis :{{book.synopsis}}
+				</p>
+				<a href="{{path('admin.books.edit', {id: book.id})}}">Modifier la fiche</a>
+			</div>
+		</div>
 
-				{% if app.user and app.user.enable == 1 and commentary.user == app.user %}
-					<div class="bookComment">
-						<p>Votre avis pour ce livre</p>
-						{% include "components/commentCard.html.twig" %}
-					</div>
-				{% endif %}
-				{% if commentary.enable == 1 and commentary.user != app.user %}
-					<div class="bookComment">
-						{% include "components/commentCard.html.twig" %}
-					</div>
-					{% else %}
-				{% endif %}
+		<div id="Commentaries">
+			<h2>Avis</h2>
+
+			{% if book.commentaries is empty %}
+				Il n'y a pas encore d'avis pour ce livre
 
 				{% if app.user %}
-					{% if app.user.enable == 1 and commentary.user != app.user %}
+					{% if app.user.enable == 1 %}
 						<div class="commentForm">
-							Rédiger un avis
-							{{form_start(form)}}
+							<p>Rédiger un avis</p>
+							{{form_start(form, {'attr':{'class':'formAdmin'}})}}
 							{{form_widget(form)}}
 							<button type="submit">Publier</button>
 							{{form_end(form)}}
@@ -114,8 +80,45 @@
 
 					<a href="{{path('app.login')}}">Connectez-vous pour poster un avis</a>
 				{% endif %}
+			{% else %}
 
-			{% endfor %}
-		{% endif %}
-	</div>
+
+				{% for commentary in book.commentaries %}
+
+					{% if app.user and app.user.enable == 1 and commentary.user == app.user %}
+						<div class="Comment">
+							<p>Votre avis pour ce livre</p>
+							{% include "components/commentCard.html.twig" %}
+						</div>
+					{% endif %}
+					{% if commentary.enable == 1 and commentary.user != app.user %}
+						<div class="Comment">
+							{% include "components/commentCard.html.twig" %}
+						</div>
+						{% else %}
+					{% endif %}
+
+					{% if app.user %}
+						{% if app.user.enable == 1 and commentary.user != app.user %}
+							<div class="commentForm">
+								Rédiger un avis
+								{{form_start(form)}}
+								{{form_widget(form)}}
+								<button type="submit">Publier</button>
+								{{form_end(form)}}
+							</div>
+
+						{% elseif app.user.enable == 0 %}
+
+							Ce compte est actuellement suspendu et ne peut pas poster d'avis
+						{% endif %}
+					{% else %}
+
+						<a href="{{path('app.login')}}">Connectez-vous pour poster un avis</a>
+					{% endif %}
+
+				{% endfor %}
+			{% endif %}
+		</div>
+	</section>
 {% endblock %}

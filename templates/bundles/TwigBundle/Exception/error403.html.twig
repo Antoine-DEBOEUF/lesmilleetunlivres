@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Page non accessible |
+	{{parent()}}
+{% endblock %}
+
+{% block body %}
+	<section>
+		<h1>Accès bloqué (erreur
+			{{status_code}})</h1>
+
+		<div class="error403">
+			<p>
+				Il semblerait que vous n'ayez pas les droits pour accéder à cette page. Si vous estimez que vous devriez pouvoir accéder à cette page :</p>
+
+			<p>
+				- Vérifiez que vous êtes bien connecté(e) à votre compte;
+			</p>
+			<p>
+				- Vérifiez que vous essayez bien d'accéder à la bonne page;
+			</p>
+
+			<p>
+				Si les deux points ci-dessus sont valides pour vous, merci de contacter le support informatique sur
+				<a class="link403" href="">cette page
+				</a>
+				ou à
+				<a class="link403" href="mailto:">cette adresse</a>
+				en mentionnant dans votre message :</p>
+			<p>
+				- la page vous souhaitez atteindre;
+			</p>
+			<p>
+				- le compte avec lequel vous avez tenté d'accéder à cette page;
+			</p>
+		</div>
+
+	</section>
+{% endblock %}

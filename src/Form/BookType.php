@@ -4,9 +4,7 @@ namespace App\Form;
 
 use App\Entity\Book;
 use App\Entity\Author;
-use App\Entity\Favorites;
 use App\Entity\Categories;
-use App\Entity\BookCategories;
 use App\Entity\Publisher;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
@@ -14,7 +12,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
