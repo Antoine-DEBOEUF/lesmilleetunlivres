@@ -49,7 +49,7 @@ class CommentaryController extends AbstractController
 
                 $this->addFlash('success', 'Votre commentaire a bien été publié');
 
-                return $this->redirectToRoute('books.details');
+                return $this->redirectToRoute('books.details', ['id' => $commentary->getBook()->getId()]);
             }
 
             return $this->render('users/commentary/create.html.twig', ['form' => $form]);

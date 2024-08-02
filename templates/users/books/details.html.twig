@@ -35,7 +35,7 @@
 					{% for author in book.author %}
 
 						<a href="{{path('authors.details', {id: author.id})}}">{{author.name}}
-							{{author.firstName}}</a>
+							{{author.firstName}}</a>,
 
 					{% endfor %}
 				</p>
@@ -44,15 +44,23 @@
 					<a href "{{path('publishers.details', {id: book.publisher.id})}}">{{book.publisher}}</a>
 				</p>
 				<p class="bookIntelItem">
-					Paru en :{{book.publishingDate}}
+					Paru en :
+					{{book.publishingDate}}
 				</p>
 				<p class="bookIntelItem">
-					ISBN :{{book.isbn}}
+					ISBN :
+					{{book.isbn}}
 				</p>
 				<p class="bookIntelItem">
-					Synopsis :{{book.synopsis}}
+					Synopsis :
+					{{book.synopsis}}
 				</p>
-				<a href="{{path('admin.books.edit', {id: book.id})}}">Modifier la fiche</a>
+				{% if is_granted('ROLE_ADMIN') %}
+
+					<a href="{{path('admin.books.edit', {id: book.id})}}">
+						<button>Modifier la fiche</button>
+					</a>
+				{% endif %}
 			</div>
 		</div>
 

@@ -67,3 +67,9 @@ button{
     border-radius: 1em;
     margin-top: 2em;
 }
+
+.actionBtns{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}

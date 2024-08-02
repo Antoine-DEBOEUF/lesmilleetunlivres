@@ -21,16 +21,17 @@
 			<div class="postContent">{{post.content}}</div>
 
 			{% if is_granted('ROLE_ADMIN') %}
-				<a href="{{path('admin.post.edit', {id:post.id})}}">
-					<button>Modifier</button>
-				</a>
+				<div class="actionBtns">
+					<a href="{{path('admin.post.edit', {id:post.id})}}">
+						<button>Modifier</button>
+					</a>
 
-				<form action="{{ path('admin.post.delete', {id:post.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article?)">
-					<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
-					<button class="btnDelete">Supprimer</button>
-				</form>
+					<form action="{{ path('admin.post.delete', {id:post.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article?)">
+						<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
+						<button class="btnDelete">Supprimer</button>
+					</form>
 
-
+				</div>
 			{% endif %}
 
 			<div id="Commentaries">

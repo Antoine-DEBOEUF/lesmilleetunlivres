@@ -10,35 +10,34 @@
 	{% endif %}
 
 	<article class="commentContent">
+		<p>
+			<strong>{{comment.title}}</strong>
+		</p>
 		{{comment.content}}
 	</article>
 
-	{% if app.user and is_granted ('ROLE_ADMIN') %}
-
-		{% if app.user == comment.author  %}
+	{% if is_granted('ROLE_ADMIN') %}
+		<div class="actionBtns">
 			<a href="{{path('admin.post.comment.edit', {id: comment.id})}}">
 				<button>Modifier</button>
 			</a>
+			<form action="{{ path('admin.post.comment.delete', {id:comment.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?)">
+				<input type="hidden" name="token" value="{{csrf_token('delete' ~ comment.id)}}">
+				<button class="btnDelete">Supprimer</button>
+			</form>
+		</div>
 
-		{% endif %}
+	{% elseif app.user and app.user == comment.author %}
+		<div class="actionBtns">
+			<a href="{{path('post.comment.edit', {id: comment.id})}}">
+				<button>Modifier</button>
+			</a>
 
+			<form action="{{ path('post.comment.delete', {id:comment.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?)">
+				<input type="hidden" name="token" value="{{csrf_token('delete' ~ comment.id)}}">
+				<button class="btnDelete">Supprimer</button>
+			</form>
 
-		<form action="{{ path('admin.post.comment.delete', {id:comment.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?)">
-			<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
-			<button class="btnDelete">Supprimer</button>
-		</form>
-
-	{% elseif app.user and app.user == comment.user %}
-
-		<a href="{{path('post.comment.edit', {id: comment.id})}}">
-			<button>Modifier</button>
-		</a>
-
-		<form action="{{ path('post.comment.delete', {id:comment.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?)">
-			<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
-			<button class="btnDelete">Supprimer</button>
-		</form>
-
-
+		</div>
 	{% endif %}
 </div>

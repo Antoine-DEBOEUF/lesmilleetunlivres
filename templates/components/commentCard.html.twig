@@ -12,29 +12,22 @@
 	<article>
 		{{commentary.content}}
 	</article>
+	{% if is_granted('ROLE_ADMIN') %}
+		<a href="{{path('admin.commentaries.edit', {id: commentary.id})}}">
+			<button>Modifier</button>
+		</a>
+	{% endif %}
+	{% if app.user and app.user == commentary.user %}
+		<div class="actionsBtns">
+			<a href="{{path('commentaries.edit', {id: commentary.id})}}">
+				<button>Modifier</button>
+			</a>
 
-	{% if app.user and is_granted ('ROLE_ADMIN') %}
+			<form action="{{ path('commentaries.delete', {id:commentary.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet avis?)">
+				<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
+				<button class="btnDelete">Supprimer</button>
+			</form>
 
-		{% if app.user == commentary.user  %}
-			<a href="{{path('admin.commentaries.edit', {id: commentary.id})}}">Modifier</a>
-
-		{% endif %}
-
-
-		<form action="{{ path('admin.commentaries.delete', {id:commentary.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet avis?)">
-			<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
-			<button class="btnDelete">Supprimer</button>
-		</form>
-
-	{% elseif app.user and app.user == commentary.user %}
-
-		<a href="{{path('commentaries.edit', {id: commentary.id})}}">Modifier</a>
-
-		<form action="{{ path('commentaries.delete', {id:commentary.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet avis?)">
-			<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
-			<button class="btnDelete">Supprimer</button>
-		</form>
-
-
+		</div>
 	{% endif %}
 </div>

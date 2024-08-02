@@ -36,10 +36,9 @@ class PostController extends AbstractController
         $comment = new PostComment;
         $form = $this->createForm(PostCommentType::class, $comment);
         $form->handleRequest($request);
+        $user = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $user = $this->getUser();
 
             $comment
                 ->setAuthor($user)
@@ -60,7 +59,8 @@ class PostController extends AbstractController
             'users/posts/details.html.twig',
             [
                 'post' => $this->postRepo->findOneById($postId),
-                'form' => $form
+                'form' => $form,
+                'user' => $user
             ]
         );
     }

@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block title %}Modifier un commentaire
-			|
+																					|
 	{{parent()}}
 {% endblock %}
 
@@ -9,9 +9,32 @@
 	<section>
 		<h1>Modifier un commentaire</h1>
 		<a href="{{path('post.details', {id: post.id})}}">Retour</a>
-		{{form_start(form, {'attr':{'class':'formAdmin'}})}}
-		{{form_widget(form)}}
-		<button type="submit">Modifier</button>
-		{{form_end(form)}}
+		{% if app.user == comment.author %}
+
+			{{form_start(form, {'attr':{'class':'formAdmin'}})}}
+			{{form_widget(form)}}
+			<button type="submit">Modifier</button>
+			{{form_end(form)}}
+
+		{% elseif app.user != comment.author and is_granted('ROLE_ADMIN') %}
+			<div class="comment">
+				<div class="commentHeader">
+					<p>{{comment.author}}</p>
+					<p>{{comment.createdAt| format_datetime('full', 'medium', locale='fr')}}</p>
+				</div>
+				<article>
+					<p>
+						<strong>{{comment.title}}</strong>
+					</p>
+					{{comment.content}}</article>
+				{{comment.enable ? 'Visibilité publique' : 'Visibilité restreinte'}}
+				{{form_start(form.enable,{'attr':{'class':'formAdmin'}})}}
+				{{form_row(form.enable)}}
+				<button type="submit">Enregistrer</button>
+				{{form_end(form.enable)}}
+			</div>
+		{% endif %}
+
+
 	</section>
 {% endblock %}

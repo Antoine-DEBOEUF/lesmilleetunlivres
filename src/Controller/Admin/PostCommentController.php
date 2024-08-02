@@ -31,7 +31,7 @@ class PostCommentController extends AbstractController
 
         $commentId = $comment->getId();
 
-        $form = $this->createForm(PostCommentType::class, $comment);
+        $form = $this->createForm(PostCommentType::class, $comment, ['isAdmin' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -44,7 +44,7 @@ class PostCommentController extends AbstractController
         }
 
         return $this->render(
-            'admin/comment/edit.html.twig',
+            'users/comment/edit.html.twig',
             [
                 'form' => $form,
                 'comment' => $this->commentRepo->findOneById($commentId),
@@ -58,7 +58,7 @@ class PostCommentController extends AbstractController
     {
         if (!$comment) {
             $this->addFlash('error', 'Commentaire non trouvé');
-            return $this->redirectToRoute('post.index');
+            return $this->redirectToRoute('books.index');
         }
 
         if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('token'))) {
