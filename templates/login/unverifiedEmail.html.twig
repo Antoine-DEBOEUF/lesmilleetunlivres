@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Email non vérifié |
+	{{parent()}}
+{% endblock %}
+
+{% block body %}
+
+	<h1>L'email associé à votre compte n'est pas vérifié</h1>
+
+	<p>
+		Merci de vérifier dans votre boite de réception et dans vos indésirables/spam que vous avez bien reçu le lien de confirmation
+	</p>
+
+	<p>Si malgré tout vous ne trouvez pas l'email ou que ce dernier n'est plus valable, cliquez
+		<button type='submit' action="app_verify_email">
+			ici
+		</button>
+		pour en renvoyer un
+	</p>
+
+
+{% endblock %}

@@ -1,0 +1,9 @@
+<h1>Une dernière étape avant de nous rejoindre!</h1>
+
+<p>
+	Merci de cliquer sur le lien ci-dessous pour vérifier votre adresse e-mail :
+	<br><br>
+	<a href="{{ signedUrl|raw }}">Confirmer mon adress</a>.
+		    Ce lien expirera dans
+	{{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+</p>

@@ -3,10 +3,20 @@
     flex-direction: row;
     list-style-type: none;
     justify-content: space-evenly;
-    align-items: center;
-    position: sticky;
-    top: 20px;
-    z-index: 1;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+nav{
+    width: 100%;
+}
+
+#websiteTitle{
+    color: white;
+    text-align: center;
+    font-family: $font-title;
+    font-size: 3em;
 }
 
 .headerLink{
@@ -25,8 +35,8 @@
     margin: auto;
     margin-top : 3em;
     padding: 1em;
-    z-index:2;
-    background-color: white;
+    z-index:3;
+    background-color: $colorCardMenu;
     position: fixed;
     left: -100vw;
 }
@@ -49,3 +59,4 @@
     transform: translate(100vw);
     transition-duration: 0.5s;
 }
+

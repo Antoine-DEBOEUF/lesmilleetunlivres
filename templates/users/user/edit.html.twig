@@ -11,7 +11,7 @@
 			{{user.username}}</h1>
 		<a href="{{path('users.profile', {id: user.id})}}">Retour au profil</a>
 
-		<div>
+		<div class="glassmorph">
 			{% if user == app.user %}
 				{{form_start(form, {'attr': {'class':'formAdmin'}})}}
 				{{form_widget(form)}}

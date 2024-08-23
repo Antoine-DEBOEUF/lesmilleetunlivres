@@ -7,10 +7,12 @@
 {% block body %}
 	<section>
 		<h1>Création d'un article</h1>
-
-		{{form_start(form, {'attr':{'class':'formAdmin'}})}}
-		{{form_widget(form)}}
-		<button type="submit">Publier</button>
-		{{form_end(form)}}
+		<div class="glassmorph">
+			<a href="{{path('post.index')}}">Retour à la liste</a>
+			{{form_start(form, {'attr':{'class':'formAdmin'}})}}
+			{{form_widget(form)}}
+			<button type="submit">Publier</button>
+			{{form_end(form)}}
+		</div>
 	</section>
 {% endblock %}

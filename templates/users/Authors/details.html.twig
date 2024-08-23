@@ -6,39 +6,43 @@
 
 {% block body %}
 	<section>
-		<h1>Fiche auteur
+		<h1 class="cardTitle">Fiche auteur
 			<p>{{author.name}}
 				{{author.firstName}}</p>
 		</h1>
 		<a href="{{path('authors.index')}}">Retour à l'index</a>
 
-		<div id="authorView">
+		<div id="authorView" class="glassmorph">
+			{% if author.books is empty %}
+				<p>Il n'y a pas encore de livres associés à cet auteur</p>
 
-			{% for book in author.books %}
+			{% else %}
 
-				<div class="bookCard">
-					<a href="{{path('books.details', {id: book.id})}}">
-						<div class="bookCardContent">
-							<aside>
-								{% if book.bookCover %}
-									{{book.bookCover}}
-								{% else %}
-									<img src="/images/defaultImage.jpg" alt="Couverture du livre indisponible" width="130" height="200">
-								{% endif %}
-							</aside>
-							<div class="bookCardIntel">
-								<h2 class="bookCardTitle">{{book.title}}</h2>
-								<p>Editeur :{{book.publisher}}</p>
-								<p>Paru en :{{book.publishingDate}}</p>
-								<p>ISBN :{{book.isbn}}</p>
+				{% for book in author.books %}
+
+					<div class="bookCard">
+						<a href="{{path('books.details', {id: book.id})}}">
+							<div class="bookCardContent">
+								<aside>
+									{% if book.bookCover %}
+										{{book.bookCover}}
+									{% else %}
+										<img src="/images/defaultImage.jpg" alt="Couverture du livre indisponible" width="130" height="200">
+									{% endif %}
+								</aside>
+								<div class="bookCardIntel">
+									<h2 class="bookCardTitle">{{book.title}}</h2>
+									<p>Editeur :{{book.publisher}}</p>
+									<p>Paru en :{{book.publishingDate}}</p>
+									<p>ISBN :{{book.isbn}}</p>
+								</div>
 							</div>
-						</div>
-					</a>
+						</a>
 
-				</div>
+					</div>
 
-			{% endfor %}
-
+				{% endfor %}
+			{% endif %}
 		</div>
 	</section>
 {% endblock %}

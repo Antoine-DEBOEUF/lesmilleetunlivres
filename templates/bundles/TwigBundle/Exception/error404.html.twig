@@ -8,14 +8,15 @@
 	<section>
 		<h1>Page introuvable (erreur
 			{{status_code}})</h1>
+		<div class="glassmorph">
+			<p class="error403">
+				La page que vous essayez d'atteindre ne semble pas exister...
+			</p>
 
-		<p class="error403">
-			La page que vous essayez d'atteindre ne semble pas exister...
-		</p>
-
-		<a href="{{path('post.index')}}">
-			<button>Retour à l'accueil</button>
-		</a>
+			<a href="{{path('post.index')}}">
+				<button>Retour à l'accueil</button>
+			</a>
+		</div>
 	</section>
 
 {% endblock %}

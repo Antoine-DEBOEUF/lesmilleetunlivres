@@ -8,10 +8,10 @@
 {% endblock %}
 
 {% block body %}
-	<section>
+	<section class="glassmorph">
 		<a href="{{path('books.index')}}">Retour à l'index</a>
 
-		<h1>{{book.title}}</h1>
+		<h1 class="cardTitle">{{book.title}}</h1>
 
 		<div class="bookCategList">
 			{% for categorie in book.categories %}

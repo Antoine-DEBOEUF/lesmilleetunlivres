@@ -1,5 +1,6 @@
 <header>
 	<nav>
+		<p id="websiteTitle">Les mille et un livres</p>
 		<ul id="navbarHeader">
 			<li>
 
@@ -36,6 +37,8 @@
 
 		<a class="menu_header_item" href="/">Accueil</a>
 
+		<a class="menu_header_item" href="">Nous contacter</a>
+
 		<div class="menu_header_section">
 			<h3>Articles</h3>
 			<a class="menu_header_item" href="{{path('post.index')}}">Index</a>
@@ -70,7 +73,10 @@
 
 		{% if app.user %}
 			<a href="/logout">Déconnexion</a>
+			<a class="menu_header_item" href="">Nous contacter</a>
 		{% endif %}
+
+		<a class="menu_header_item" href="/">Accueil</a>
 
 		<div class="menu_header_section">
 			<h3>Articles</h3>

@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block title %}Modifier un commentaire
-																					|
+
 	{{parent()}}
 {% endblock %}
 
@@ -11,13 +11,13 @@
 		<a href="{{path('post.details', {id: post.id})}}">Retour</a>
 		{% if app.user == comment.author %}
 
-			{{form_start(form, {'attr':{'class':'formAdmin'}})}}
+			{{form_start(form, {'attr':{'class':'formAdmin glassmorph'}})}}
 			{{form_widget(form)}}
 			<button type="submit">Modifier</button>
 			{{form_end(form)}}
 
 		{% elseif app.user != comment.author and is_granted('ROLE_ADMIN') %}
-			<div class="comment">
+			<div class="comment glassmorph">
 				<div class="commentHeader">
 					<p>{{comment.author}}</p>
 					<p>{{comment.createdAt| format_datetime('full', 'medium', locale='fr')}}</p>

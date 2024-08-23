@@ -7,10 +7,10 @@
 {% block body %}
 	<section>
 		<h1>Création d'une fiche éditeur</h1>
+		<div class="glassmorph">
+			<a href="{{path('publishers.index')}}">Retour à l'index</a>
 
-		<a href="{{path('publishers.index')}}">Retour à l'index</a>
 
-		<div>
 			{{form_start(form, {'attr':{'class':'formAdmin'}})}}
 			{{form_widget(form)}}
 			<button type="submit">Créer la fiche</button>

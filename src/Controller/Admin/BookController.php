@@ -21,8 +21,7 @@ class BookController extends AbstractController
     public function __construct(
         private BookRepository $bookRepo,
         private EntityManagerInterface $em
-    ) {
-    }
+    ) {}
 
 
     #[Route('/create', '.create', methods: ['GET', 'POST'])]
@@ -69,6 +68,7 @@ class BookController extends AbstractController
             'admin/books/edit.html.twig',
             [
                 'form' => $form,
+                'book' => $book
             ]
         );
     }

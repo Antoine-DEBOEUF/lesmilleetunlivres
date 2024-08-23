@@ -7,7 +7,7 @@
 {% block body %}
 	<section>
 		<h1>Se connecter</h1>
-		<form action="{{ path('app.login')}}" method="post" id="formLogin">
+		<form action="{{ path('app.login')}}" method="post" id="formLogin" class="glassmorph">
 			{% if error %}
 				{{error.messageKey|trans(error.messageData, 'security')}}
 			{% endif %}
@@ -24,10 +24,14 @@
 			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate')}}">
 
 			<button id="loginButton" type="submit">Connexion</button>
+
+			<div id="registerLink">
+				<a href="{{path('app_register')}}">S'inscrire</a>
+				|
+				<a href="{{path('app_forgot_password_request')}}">Réinitialiser le mot de passe</a>
+			</div>
 		</form>
 
-		<div id="registerLink">
-			<a href="{{path('app.register')}}">S'inscrire</a>
-		</div>
+
 	</section>
 {% endblock %}

@@ -6,7 +6,7 @@
 
 {% block body %}
 	<section>
-		<h1>Fiche éditeur
+		<h1 class="cardTitle">Fiche éditeur<br>
 			{{publisher.name}}
 		</h1>
 		<a href="{{path('publishers.index')}}">Retour à l'index</a>
@@ -16,7 +16,7 @@
 
 			{% for book in publisher.books %}
 
-				<div class="bookCard">
+				<div class="bookCard glassmorph">
 					<a href="{{path('books.details', {id: book.id})}}">
 						<div class="bookCardContent">
 							<aside>

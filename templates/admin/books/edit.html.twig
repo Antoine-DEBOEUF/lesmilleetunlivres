@@ -8,12 +8,18 @@
 {% block body %}
 	<section>
 		<h1>Modification d'une fiche livre</h1>
+		<div class="glassmorph">
+			<a href="{{path('books.details', {id:book.id})}}">Retour</a>
 
-		<a href="{{path('books.index')}}">Retour à la liste</a>
+			{{form_start(form)}}
+			{{form_widget(form)}}
+			<button type="submit">Enregistrer les modifications</button>
+			{{form_end(form)}}
 
-		{{form_start(form)}}
-		{{form_widget(form)}}
-		<button type="submit">Enregistrer les modifications</button>
-		{{form_end(form)}}
+			<form action="{{path('admin.books.delete', {id:book.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette fiche?')">
+				<input type="hidden" name="token" value="{{csrf_token('delete' ~ book.id)}}">
+				<button>Supprimer</button>
+			</form>
+		</div>
 	</section>
 {% endblock %}

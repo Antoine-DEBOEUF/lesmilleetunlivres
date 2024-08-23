@@ -7,4 +7,3 @@ import './bootstrap.js';
  */
 import './styles/app.scss';
 import'./javascript/menu_header.js';
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

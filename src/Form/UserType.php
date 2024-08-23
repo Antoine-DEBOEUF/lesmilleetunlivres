@@ -6,6 +6,7 @@ use App\Entity\Users;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -29,7 +30,8 @@ class UserType extends AbstractType
                     'label' => 'Nom d\'utilisateur :',
                     'required' => false,
                     'constraints' => [
-                        new NotBlank(['message' => 'Choisissez un nom d\'utilisateur'])
+                        new NotBlank(['message' => 'Choisissez un nom d\'utilisateur']),
+                        new IsTrue(['message' => 'Nom d\'utilisateur indisponible'])
                     ],
                     'attr' => ['class' => 'formItem'],
                 ]
@@ -41,7 +43,8 @@ class UserType extends AbstractType
                     'label' => 'Votre email :',
                     'required' => false,
                     'constraints' => [
-                        new NotBlank(['message' => 'Renseignez un email'])
+                        new NotBlank(['message' => 'Renseignez un email']),
+                        new Istrue(['message' => 'Adresse e-mail invalide'])
                     ],
                     'attr' => ['class' => 'formItem'],
                 ]
@@ -83,7 +86,17 @@ class UserType extends AbstractType
                     'download_uri' => false,
                     'attr' => ['class' => 'formItem'],
                 ]
-            );
+            )
+
+            ->add('agreeTerms', CheckboxType::class, [
+                'mapped' => false,
+                'label' => 'J\'ai lu et j\'accepte les conditions d\'utilisation',
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'Veuillez cocher la case pour accepter les conditions d\'utilisation.',
+                    ]),
+                ],
+            ]);
 
         if ($options['isAdmin']) {
             $builder
@@ -91,6 +104,7 @@ class UserType extends AbstractType
                 ->remove('username')
                 ->remove('avatarImg')
                 ->remove('email')
+                ->remove('agreeTerms')
                 ->add(
                     'roles',
                     ChoiceType::class,

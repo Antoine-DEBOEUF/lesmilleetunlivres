@@ -35,6 +35,7 @@ class PostCommentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $this->em->persist($comment);
             $this->em->flush();
 

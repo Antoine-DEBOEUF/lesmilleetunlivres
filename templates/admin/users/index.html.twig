@@ -13,7 +13,7 @@
 			{% for user in users %}
 
 				<a href="{{path('users.profile', {id: user.id})}}">
-					<div id="userCard">
+					<div id="userCard" class="glassmorph">
 						<aside>
 							{% if user.avatarImg %}
 								{{user.avatarImg}}
