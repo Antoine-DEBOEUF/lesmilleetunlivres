@@ -37,6 +37,7 @@ class SecurityController extends AbstractController
         if (!$user->isVerified()) {
             return $this->redirectToRoute('app_email_unverified');
         }
+
         return $this->redirectToRoute('post.index');
     }
 
