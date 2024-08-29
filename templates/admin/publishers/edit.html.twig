@@ -9,6 +9,9 @@
 		<h1>Modification d'une fiche éditeur</h1>
 
 		<div class="glassmorph">
+			<a href="{{path('admin.publishers.details', {id: publisher.id})}}">
+				<button>Retour</button>
+			</a>
 			{{form_start(form)}}
 			{{form_widget(form)}}
 			<button type="submit">Enregistrer les modifications</button>

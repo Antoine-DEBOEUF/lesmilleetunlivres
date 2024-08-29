@@ -8,6 +8,7 @@
     width : 80vw;
     justify-content: center;
     font-size: smaller;
+    margin: 5vh auto 5vh;
 }
 
 
@@ -35,4 +36,11 @@
 .bookCardIntel > p{
     margin-left: 3vw;
     margin-top: 2vh;  
+}
+
+@media (min-width: 426px){
+
+    .bookCard{
+        width: 70%;
+    }
 }

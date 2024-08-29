@@ -39,6 +39,7 @@ nav{
     background-color: $colorCardMenu;
     position: fixed;
     left: -100vw;
+    
 }
 
 .menu_header_section{
@@ -60,3 +61,14 @@ nav{
     transition-duration: 0.5s;
 }
 
+@media (min-width: 426px){
+
+    #websiteTitle{
+        font-size: 5em;
+    }
+
+    #menu_header{
+        width:10%;
+        
+    }
+}

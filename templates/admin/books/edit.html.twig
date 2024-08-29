@@ -9,7 +9,9 @@
 	<section>
 		<h1>Modification d'une fiche livre</h1>
 		<div class="glassmorph">
-			<a href="{{path('books.details', {id:book.id})}}">Retour</a>
+			<a href="{{path('books.details', {id:book.id})}}">
+				<button>Retour</button>
+			</a>
 
 			{{form_start(form)}}
 			{{form_widget(form)}}

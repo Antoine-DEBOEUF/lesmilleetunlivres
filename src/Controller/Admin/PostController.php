@@ -19,8 +19,7 @@ class PostController extends AbstractController
         private readonly EntityManagerInterface $em,
         private readonly PostRepository $postRepo
 
-    ) {
-    }
+    ) {}
 
     #[Route('/create', name: '.create', methods: ['POST', 'GET'])]
     public function create(Request $request): Response
@@ -67,9 +66,10 @@ class PostController extends AbstractController
         }
 
         return $this->render(
-            'admin/post/edit.html.twig',
+            'admin/posts/edit.html.twig',
             [
                 'form' => $form,
+                'post' => $post
             ]
         );
     }

@@ -19,8 +19,7 @@ class PostController extends AbstractController
     public function __construct(
         private PostRepository $postRepo,
         private EntityManagerInterface $em
-    ) {
-    }
+    ) {}
 
     #[Route('', name: '.index')]
     public function index(): Response
@@ -34,7 +33,7 @@ class PostController extends AbstractController
     public function show(Post $post, Request $request): Response|RedirectResponse
     {
         $comment = new PostComment;
-        $form = $this->createForm(PostCommentType::class, $comment);
+        $form = $this->createForm(PostCommentType::class, $comment, ['isOwner' => true]);
         $form->handleRequest($request);
         $user = $this->getUser();
 

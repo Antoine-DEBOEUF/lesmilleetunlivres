@@ -5,7 +5,7 @@
 		<meta name="description" content="Le site web pour répertorier et évaluer vos lectures. Retrouvez également toute l'actualité littéraire sur notre blog!">
 		<meta name="viewport" content="width=device-width initial-scale=1.0">
 		<title>
-			{% block title %}Les milles et un livres
+			{% block title %}Les mille et un livres
 			{% endblock %}
 		</title>
 		{% block stylesheets %}
@@ -20,6 +20,7 @@
 	<body>
 		{% include "header.html.twig" %}
 		<main>
+			{% include "flash.html.twig" %}
 			{% block body %}{% endblock %}
 		</main>
 		{% include "footer.html.twig" %}

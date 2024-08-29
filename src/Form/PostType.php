@@ -30,7 +30,10 @@ class PostType extends AbstractType
                 [
                     'label' => 'Corps de l\'article',
                     'required' => false,
-                    'attr' => ['class' => 'formItem']
+                    'attr' => [
+                        'class' => 'formItem',
+                        'rows' => 10
+                    ]
                 ]
             )
 

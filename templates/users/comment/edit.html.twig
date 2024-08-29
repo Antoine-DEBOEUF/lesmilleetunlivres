@@ -8,16 +8,13 @@
 {% block body %}
 	<section>
 		<h1>Modifier un commentaire</h1>
-		<a href="{{path('post.details', {id: post.id})}}">Retour</a>
-		{% if app.user == comment.author %}
+		<a href="{{path('post.details', {id: post.id})}}">
+			<button>Retour</button>
+		</a>
 
-			{{form_start(form, {'attr':{'class':'formAdmin glassmorph'}})}}
-			{{form_widget(form)}}
-			<button type="submit">Modifier</button>
-			{{form_end(form)}}
+		<div class="comment glassmorph">
+			{% if app.user != comment.author and is_granted('ROLE_ADMIN') %}
 
-		{% elseif app.user != comment.author and is_granted('ROLE_ADMIN') %}
-			<div class="comment glassmorph">
 				<div class="commentHeader">
 					<p>{{comment.author}}</p>
 					<p>{{comment.createdAt| format_datetime('full', 'medium', locale='fr')}}</p>
@@ -28,13 +25,15 @@
 					</p>
 					{{comment.content}}</article>
 				{{comment.enable ? 'Visibilité publique' : 'Visibilité restreinte'}}
-				{{form_start(form.enable,{'attr':{'class':'formAdmin'}})}}
-				{{form_row(form.enable)}}
-				<button type="submit">Enregistrer</button>
-				{{form_end(form.enable)}}
-			</div>
-		{% endif %}
 
+
+			{% endif %}
+
+			{{form_start(form, {'attr':{'class':'formAdmin'}})}}
+			{{form_widget(form)}}
+			<button type="submit">Modifier</button>
+			{{form_end(form)}}
+		</div>
 
 	</section>
 {% endblock %}

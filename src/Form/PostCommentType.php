@@ -14,26 +14,28 @@ class PostCommentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add(
-                'title',
-                TextType::class,
-                [
-                    'label' => 'Titre (facultatif) :',
-                    'required' => false,
-                    'attr' => ['class' => 'formItem']
-                ]
-            )
+        if ($options['isOwner']) {
+            $builder
+                ->add(
+                    'title',
+                    TextType::class,
+                    [
+                        'label' => 'Titre (facultatif) :',
+                        'required' => false,
+                        'attr' => ['class' => 'formItem']
+                    ]
+                )
 
-            ->add(
-                'content',
-                TextareaType::class,
-                [
-                    'label' => 'Votre commentaire :',
-                    'required' => false,
-                    'attr' => ['class' => 'formItem']
-                ]
-            );
+                ->add(
+                    'content',
+                    TextareaType::class,
+                    [
+                        'label' => 'Votre commentaire :',
+                        'required' => false,
+                        'attr' => ['class' => 'formItem']
+                    ]
+                );
+        }
 
         if ($options['isAdmin']) {
             $builder
@@ -55,6 +57,7 @@ class PostCommentType extends AbstractType
         $resolver->setDefaults([
             'data_class' => PostComment::class,
             'isAdmin' => false,
+            'isOwner' => false,
             'sanitize_html' => true
         ]);
     }

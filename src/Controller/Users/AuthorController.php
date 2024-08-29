@@ -17,14 +17,14 @@ class AuthorController extends AbstractController
     public function __construct(
         private AuthorRepository $authorRepo,
         private EntityManagerInterface $em
-    ) {
-    }
+    ) {}
 
     #[Route('', name: '.index')]
     public function index(): Response
     {
+
         return $this->render('Users/authors/index.html.twig', [
-            'authors' => $this->authorRepo->findAll(),
+            'authors' => $this->authorRepo->findBy([], ['Name' => 'ASC']),
         ]);
     }
 

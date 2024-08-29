@@ -2,6 +2,7 @@
 
 namespace App\Controller\Users;
 
+use App\Entity\Users;
 use App\Entity\PostComment;
 use App\Form\PostCommentType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,8 +22,7 @@ class PostCommentController extends AbstractController
         private EntityManagerInterface $em,
         private PostCommentRepository $commentRepo
 
-    ) {
-    }
+    ) {}
 
 
     #[Route('/{id}/edit', '.edit', methods: ['GET', 'POST'])]
@@ -30,8 +30,10 @@ class PostCommentController extends AbstractController
     {
 
         $commentId = $comment->getId();
+        /** @var Users $user */
+        $user = $this->getUser();
 
-        $form = $this->createForm(PostCommentType::class, $comment);
+        $form = $this->createForm(PostCommentType::class, $comment, ['isOwner' => $user->getId() === $comment->getAuthor()->getId()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

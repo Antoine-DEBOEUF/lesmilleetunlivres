@@ -21,7 +21,7 @@
 			<a href="{{path('admin.post.comment.edit', {id: comment.id})}}">
 				<button>Modifier</button>
 			</a>
-			<form action="{{ path('admin.post.comment.delete', {id:comment.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?)">
+			<form action="{{ path('admin.post.comment.delete', {id:comment.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?')">
 				<input type="hidden" name="token" value="{{csrf_token('delete' ~ comment.id)}}">
 				<button class="btnDelete">Supprimer</button>
 			</form>
@@ -33,7 +33,7 @@
 				<button>Modifier</button>
 			</a>
 
-			<form action="{{ path('post.comment.delete', {id:comment.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?)">
+			<form action="{{ path('post.comment.delete', {id:comment.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?')">
 				<input type="hidden" name="token" value="{{csrf_token('delete' ~ comment.id)}}">
 				<button class="btnDelete">Supprimer</button>
 			</form>

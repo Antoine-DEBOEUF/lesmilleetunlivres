@@ -7,7 +7,9 @@
 {% block body %}
 	<section>
 		<h1>Modifier un avis</h1>
-		<a href="{{path('books.details', {id: book.id})}}">Retour</a>
+		<a href="{{path('books.details', {id: book.id})}}">
+			<button>Retour</button>
+		</a>
 		{{form_start(form, {'attr':{'class':'formAdmin glassmorph'}})}}
 		{{form_widget(form)}}
 		<button type="submit">Modifier</button>

@@ -20,14 +20,13 @@ class BookController extends AbstractController
     public function __construct(
         private BookRepository $bookRepo,
         private EntityManagerInterface $em
-    ) {
-    }
+    ) {}
 
     #[Route('', name: '.index')]
     public function index(): Response
     {
         return $this->render('users/books/index.html.twig', [
-            'books' => $this->bookRepo->findAll()
+            'books' => $this->bookRepo->findBy([], ['title' => 'ASC'])
         ]);
     }
 
@@ -54,7 +53,7 @@ class BookController extends AbstractController
 
             $this->addFlash('success', 'Votre commentaire a bien été publié');
 
-            return $this->redirectToRoute('users.books.details');
+            return $this->redirectToRoute('books.details', ['id' => $book->getId()]);
         }
 
 

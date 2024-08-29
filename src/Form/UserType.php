@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-
+use Symfony\Component\Validator\Constraints\IsFalse;
 
 class UserType extends AbstractType
 {
@@ -31,7 +31,7 @@ class UserType extends AbstractType
                     'required' => false,
                     'constraints' => [
                         new NotBlank(['message' => 'Choisissez un nom d\'utilisateur']),
-                        new IsTrue(['message' => 'Nom d\'utilisateur indisponible'])
+
                     ],
                     'attr' => ['class' => 'formItem'],
                 ]
@@ -44,7 +44,7 @@ class UserType extends AbstractType
                     'required' => false,
                     'constraints' => [
                         new NotBlank(['message' => 'Renseignez un email']),
-                        new Istrue(['message' => 'Adresse e-mail invalide'])
+
                     ],
                     'attr' => ['class' => 'formItem'],
                 ]
@@ -91,11 +91,7 @@ class UserType extends AbstractType
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'label' => 'J\'ai lu et j\'accepte les conditions d\'utilisation',
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'Veuillez cocher la case pour accepter les conditions d\'utilisation.',
-                    ]),
-                ],
+
             ]);
 
         if ($options['isAdmin']) {

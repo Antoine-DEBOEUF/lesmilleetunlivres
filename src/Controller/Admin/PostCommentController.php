@@ -21,8 +21,7 @@ class PostCommentController extends AbstractController
         private EntityManagerInterface $em,
         private PostCommentRepository $commentRepo
 
-    ) {
-    }
+    ) {}
 
 
     #[Route('/{id}/edit', '.edit', methods: ['GET', 'POST'])]
@@ -31,7 +30,10 @@ class PostCommentController extends AbstractController
 
         $commentId = $comment->getId();
 
-        $form = $this->createForm(PostCommentType::class, $comment, ['isAdmin' => true]);
+        /** @var Users $user */
+        $user = $this->getUser();
+
+        $form = $this->createForm(PostCommentType::class, $comment, ['isAdmin' => true, 'isOwner' => $user->getId() === $comment->getAuthor()->getId()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

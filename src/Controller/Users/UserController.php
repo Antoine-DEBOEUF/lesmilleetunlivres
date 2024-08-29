@@ -12,17 +12,16 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/users', 'users')]
+#[Route('/users/profile', 'users')]
 class UserController extends AbstractController
 
 {
     public function __construct(
         private UsersRepository $userRepo,
         private EntityManagerInterface $em
-    ) {
-    }
+    ) {}
 
-    #[Route('/profil/{id}', '.profile', methods: ['GET'])]
+    #[Route('/{id}', '.profile', methods: ['GET'])]
     public function show(Request $request, Users $id): Response|RedirectResponse
 
     {

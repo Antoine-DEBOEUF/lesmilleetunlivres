@@ -9,7 +9,9 @@
 
 {% block body %}
 	<section class="glassmorph">
-		<a href="{{path('books.index')}}">Retour à l'index</a>
+		<a href="{{path('books.index')}}">
+			<button>Retour à l'index</button>
+		</a>
 
 		<h1 class="cardTitle">{{book.title}}</h1>
 
@@ -93,20 +95,22 @@
 
 				{% for commentary in book.commentaries %}
 
-					{% if app.user and app.user.enable == 1 and commentary.user == app.user %}
-						<div class="Comment">
+					{% if app.user %}
+						{% if app.user.enable == 1 and commentary.user == app.user %}
+
 							<p>Votre avis pour ce livre</p>
 							{% include "components/commentCard.html.twig" %}
-						</div>
-					{% endif %}
-					{% if commentary.enable == 1 and commentary.user != app.user %}
-						<div class="Comment">
-							{% include "components/commentCard.html.twig" %}
-						</div>
-						{% else %}
-					{% endif %}
 
-					{% if app.user %}
+
+						{% elseif app.user.enable == 0 %}
+
+							Ce compte est actuellement suspendu et ne peut pas poster d'avis
+
+						{% endif %}
+						{% if commentary.enable == 1 and commentary.user != app.user %}
+
+							{% include "components/commentCard.html.twig" %}
+						{% endif %}
 						{% if app.user.enable == 1 and commentary.user != app.user %}
 							<div class="commentForm">
 								Rédiger un avis
@@ -116,16 +120,19 @@
 								{{form_end(form)}}
 							</div>
 
-						{% elseif app.user.enable == 0 %}
-
-							Ce compte est actuellement suspendu et ne peut pas poster d'avis
 						{% endif %}
 					{% else %}
+						{% include "components/commentCard.html.twig" %}
 
-						<a href="{{path('app.login')}}">Connectez-vous pour poster un avis</a>
+
 					{% endif %}
-
 				{% endfor %}
+				{% if app.user is null %}
+
+					<a href="{{path('app.login')}}">
+						<button>Connectez-vous pour poster un avis</button>
+					</a>
+				{% endif %}
 			{% endif %}
 		</div>
 	</section>

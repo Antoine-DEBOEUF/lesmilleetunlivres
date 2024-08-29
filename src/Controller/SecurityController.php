@@ -3,18 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Users;
-use App\Form\UserType;
-use App\Repository\UsersRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Http\Attribute\CurrentUser;
+
 
 class SecurityController extends AbstractController
 {
@@ -36,11 +29,14 @@ class SecurityController extends AbstractController
     #[Route('/redirect', name: 'app_redirect_after_login', methods: ['GET', 'POST'])]
     public function redirectAfterLogin(): Response
     {
-        // $user = $this->getUser();
+        /**
+         * @var Users
+         */
+        $user = $this->getUser();
 
-        // if ($user->IsVerified() == 0) {
-        //     $this->redirectToRoute('app_email_unverified');
-        // }
+        if (!$user->isVerified()) {
+            return $this->redirectToRoute('app_email_unverified');
+        }
         return $this->redirectToRoute('post.index');
     }
 

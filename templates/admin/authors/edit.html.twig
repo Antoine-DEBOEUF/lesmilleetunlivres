@@ -7,8 +7,11 @@
 {% block body %}
 	<section>
 		<h1>Modification d'une fiche auteur</h1>
-		<a href="{{path('admin.authors.details', {id: author.id})}}">Retour</a>
+
 		<div class="glassmorph">
+			<a href="{{path('admin.authors.details', {id: author.id})}}">
+				<button>Retour</button>
+			</a>
 			{{form_start(form)}}
 			{{form_widget(form)}}
 			<button type="submit">Enregistrer les modifications</button>

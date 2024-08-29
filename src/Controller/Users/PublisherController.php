@@ -18,14 +18,13 @@ class PublisherController extends AbstractController
     public function __construct(
         private PublisherRepository $publiRepo,
         private EntityManagerInterface $em
-    ) {
-    }
+    ) {}
 
     #[Route('', name: '.index')]
     public function index(): Response
     {
         return $this->render('Users/publishers/index.html.twig', [
-            'publishers' => $this->publiRepo->findAll()
+            'publishers' => $this->publiRepo->findBy([], ['Name' => 'ASC'])
         ]);
     }
 

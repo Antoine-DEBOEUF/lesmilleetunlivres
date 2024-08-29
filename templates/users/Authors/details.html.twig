@@ -5,14 +5,16 @@
 {% endblock %}
 
 {% block body %}
-	<section>
+	<section class="glassmorph">
 		<h1 class="cardTitle">Fiche auteur
 			<p>{{author.name}}
 				{{author.firstName}}</p>
 		</h1>
-		<a href="{{path('authors.index')}}">Retour à l'index</a>
+		<a href="{{path('authors.index')}}">
+			<button>Retour à l'index</button>
+		</a>
 
-		<div id="authorView" class="glassmorph">
+		<div id="authorView">
 			{% if author.books is empty %}
 				<p>Il n'y a pas encore de livres associés à cet auteur</p>
 

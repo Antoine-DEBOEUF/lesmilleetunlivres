@@ -16,15 +16,15 @@
 		<a href="{{path('admin.commentaries.edit', {id: commentary.id})}}">
 			<button>Modifier</button>
 		</a>
-	{% endif %}
-	{% if app.user and app.user == commentary.user %}
-		<div class="actionsBtns">
+
+	{% elseif app.user and app.user == commentary.user %}
+		<div class="actionBtns">
 			<a href="{{path('commentaries.edit', {id: commentary.id})}}">
 				<button>Modifier</button>
 			</a>
 
-			<form action="{{ path('commentaries.delete', {id:commentary.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet avis?)">
-				<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
+			<form action="{{ path('commentaries.delete', {id:commentary.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet avis?')">
+				<input type="hidden" name="token" value="{{csrf_token('delete' ~ commentary.id)}}">
 				<button class="btnDelete">Supprimer</button>
 			</form>
 

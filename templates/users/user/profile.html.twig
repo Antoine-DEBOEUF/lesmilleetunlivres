@@ -53,15 +53,16 @@
 						</div>
 						<p>{{avis.content}}</p>
 						{% if user.enable == 1 %}
+							<div class="actionBtns">
+								<a href="{{path('commentaries.edit', {id: avis.id})}}">
+									<button>Modifier</button>
+								</a>
 
-							<a href="{{path('commentaries.edit', {id: avis.id})}}">
-								<button>Modifier</button>
-							</a>
-
-							<form action="{{ path('commentaries.delete', {id:avis.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?)">
-								<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
-								<button class="btnDelete">Supprimer</button>
-							</form>
+								<form action="{{ path('commentaries.delete', {id:avis.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?)">
+									<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
+									<button class="btnDelete">Supprimer</button>
+								</form>
+							</div>
 							{% else %}
 
 						{% endif %}
@@ -86,15 +87,16 @@
 						</div>
 						<p>{{comment.content}}</p>
 						{% if user.enable == 1 %}
+							<div class="actionBtns">
+								<a href="{{path('post.comment.edit', {id: comment.id})}}">
+									<button>Modifier</button>
+								</a>
 
-							<a href="{{path('post.comment.edit', {id: comment.id})}}">
-								<button>Modifier</button>
-							</a>
-
-							<form action="{{ path('post.comment.delete', {id:comment.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?)">
-								<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
-								<button class="btnDelete">Supprimer</button>
-							</form>
+								<form action="{{ path('post.comment.delete', {id:comment.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?)">
+									<input type="hidden" name="_token" value="{{csrf_token('delete')}}">
+									<button class="btnDelete">Supprimer</button>
+								</form>
+							</div>
 							{% else %}
 
 						{% endif %}

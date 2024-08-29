@@ -1,5 +1,5 @@
 <footer>
-	<div class="glassmorph">
+	<div class="glassmorph" id="footerDiv">
 		<p id="footerTitle">
 			<strong>Suivez-nous :</strong>
 		</p>
@@ -10,10 +10,10 @@
 			<a href="https://www.x.com"><img src="/images/Twitter_logo.jpg" alt="Lien vers la page X/Twitter" width="40vw" height="40vh"></a>
 		</div>
 		<div id="legalLinks">
-			<a href="/templates/mentionslegales.html.twig">
+			<a href="{{path('mentionslegales')}}">
 				<button>Mentions légales</button>
 			</a>
-			<a href="/templates/cgu.html.twig">
+			<a href="{{path('cgu')}}">
 				<button>Conditions d'utilisation</button>
 			</a>
 		</div>

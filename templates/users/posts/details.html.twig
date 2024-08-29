@@ -11,7 +11,9 @@
 
 		<h1 class="cardTitle">{{post.title}}</h1>
 		<div class="postView">
-			<a href="{{path('post.index')}}">Retour</a>
+			<a href="{{path('post.index')}}">
+				<button>Retour</button>
+			</a>
 
 			<div class="postHeader">
 				<p>Par :
@@ -68,12 +70,15 @@
 								<p>Votre commentaire pour cet article</p>
 								{% include "components/postCommentCard.html.twig" %}
 							</div>
-						{% endif %}
-						{% if comment.enable == 1 and comment.author != app.user %}
+
+						{% elseif comment.enable == 1 and comment.author != app.user %}
 							<div class="Comment">
 								{% include "components/postCommentCard.html.twig" %}
 							</div>
-							{% else %}
+						{% elseif is_granted('ROLE_ADMIN') %}
+							<div class="Comment">
+								{% include "components/postCommentCard.html.twig" %}
+							</div>
 						{% endif %}
 
 						{% if app.user %}
