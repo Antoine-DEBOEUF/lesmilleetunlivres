@@ -88,7 +88,9 @@
 					{% endif %}
 				{% else %}
 
-					<a href="{{path('app.login')}}">Connectez-vous pour poster un avis</a>
+					<a href="{{path('app.login')}}">
+						<button>Connectez-vous pour poster un avis</button>
+					</a>
 				{% endif %}
 			{% else %}
 
@@ -121,12 +123,15 @@
 							</div>
 
 						{% endif %}
-					{% else %}
+					{% elseif is_granted('ROLE_ADMIN') %}
 						{% include "components/commentCard.html.twig" %}
 
-
+					{% elseif commentary.enable == 1 %}
+						{% include "components/commentCard.html.twig" %}
 					{% endif %}
+
 				{% endfor %}
+
 				{% if app.user is null %}
 
 					<a href="{{path('app.login')}}">
