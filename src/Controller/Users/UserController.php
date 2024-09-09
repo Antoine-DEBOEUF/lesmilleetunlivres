@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 #[Route('/users/profile', 'users')]
 class UserController extends AbstractController
@@ -18,7 +19,7 @@ class UserController extends AbstractController
 {
     public function __construct(
         private UsersRepository $userRepo,
-        private EntityManagerInterface $em
+        private EntityManagerInterface $em,
     ) {}
 
     #[Route('/{id}', '.profile', methods: ['GET'])]
@@ -81,17 +82,19 @@ class UserController extends AbstractController
     {
         if (!$user) {
             $this->addFlash('error', 'Utilisateur non trouvé');
-            return $this->redirectToRoute('users.profile');
+            return $this->redirectToRoute('post.index');
         }
+
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('token'))) {
             $this->em->remove($user);
             $this->em->flush();
+            $this->container->get('security.token_storage')->setToken(null);
 
             $this->addFlash('success', 'Utilisateur supprimé avec succès');
         } else {
             $this->addflash('error', 'token CSRF invalide');
         }
 
-        return $this->redirectToRoute('books.index');
+        return $this->redirectToRoute('post.index');
     }
 }
