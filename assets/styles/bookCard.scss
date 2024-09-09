@@ -11,7 +11,11 @@
     margin: 5vh auto 5vh;
 }
 
-
+.bookCover{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
 .bookCardContent{
     display:flex;

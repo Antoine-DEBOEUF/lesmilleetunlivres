@@ -8,6 +8,12 @@
 	<section>
 		<h1>Index des auteurs</h1>
 
+		{% if is_granted('ROLE_ADMIN') %}
+			<a href="{{path('admin.authors.create')}}">
+				<button>Créer une fiche auteur</button>
+			</a>
+		{% endif %}
+
 		<div id="authorsList">
 			{% for author in authors %}
 

@@ -123,7 +123,7 @@ class BookType extends AbstractType
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.title', 'ASC');
                 },
-                'expanded' => true,
+                'expanded' => false,
                 'multiple' => true,
                 'by_reference' => true,
                 'autocomplete' => true,

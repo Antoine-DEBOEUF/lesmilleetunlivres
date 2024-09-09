@@ -37,7 +37,7 @@ class BookController extends AbstractController
 
                 $this->addFlash('success', 'La fiche du livre a bien été créé');
 
-                return $this->redirectToRoute('admin.books.index');
+                return $this->redirectToRoute('books.index');
             }
 
             return $this->render('admin/books/create.html.twig', ['form' => $form]);
@@ -49,7 +49,7 @@ class BookController extends AbstractController
     {
         if (!$book) {
             $this->addFlash('error', 'Livre non trouvé');
-            return $this->redirectToRoute('admin.books.index');
+            return $this->redirectToRoute('books.index');
         }
 
         $form = $this->createForm(BookType::class, $book, ['isAdmin' => true]);
@@ -78,7 +78,7 @@ class BookController extends AbstractController
     {
         if (!$book) {
             $this->addFlash('error', 'Livre non trouvé');
-            return $this->redirectToRoute('admin.users.index');
+            return $this->redirectToRoute('books.index');
         }
         if ($this->isCsrfTokenValid('delete' . $book->getId(), $request->request->get('token'))) {
             $this->em->remove($book);
@@ -89,6 +89,6 @@ class BookController extends AbstractController
             $this->addflash('error', 'token CSRF invalide');
         }
 
-        return $this->redirectToRoute('admin.books.index');
+        return $this->redirectToRoute('books.index');
     }
 }

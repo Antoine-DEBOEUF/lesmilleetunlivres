@@ -10,8 +10,15 @@
 	<section>
 		<h1>Index des livres</h1>
 
+		{% if is_granted('ROLE_ADMIN') %}
+			<a href="{{path('admin.books.create')}}">
+				<button>Créer une fiche livre</button>
+			</a>
+		{% endif %}
+
 		{% for book in books %}
 			{% if book.enable == 1 %}
+
 				<div class="bookCard glassmorph">
 					<a href="{{ path('books.details', {id: book.id})}}">
 						<div class="bookCardContent">
@@ -19,7 +26,7 @@
 								{% if book.bookCover %}
 									{{book.bookCover}}
 								{% else %}
-									<img src="/images/defaultImage.jpg" alt="Couverture du livre indisponible" width="130" height="200" loading="lazy">
+									<img class="bookCover" src="/images/default_image.png" alt="Couverture du livre indisponible" loading="lazy">
 								{% endif %}
 
 							</aside>
@@ -46,15 +53,17 @@
 						</div>
 					</a>
 				</div>
+
 			{% elseif book.enable == 0 and is_granted('ROLE_ADMIN') %}
-				<div class="bookCard">
+
+				<div class="bookCard glassmorph">
 					<a href="{{ path('books.details', {id: book.id})}}">
 						<div class="bookCardContent">
 							<aside>
 								{% if book.bookCover %}
 									{{book.bookCover}}
 								{% else %}
-									<img src="/images/defaultImage.jpg" alt="Couverture du livre indisponible" width="130" height="200">
+									<img src="/images/defaultImage.png" alt="Couverture du livre indisponible" width="130" height="200">
 								{% endif %}
 
 							</aside>
@@ -79,6 +88,7 @@
 						</div>
 					</a>
 				</div>
+
 			{% endif %}
 		{% endfor %}
 	</section>

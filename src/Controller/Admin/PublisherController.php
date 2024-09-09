@@ -22,8 +22,7 @@ class PublisherController extends AbstractController
     public function __construct(
         private PublisherRepository $publiRepo,
         private EntityManagerInterface $em
-    ) {
-    }
+    ) {}
 
     #[Route('/create', '.create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response|RedirectResponse
@@ -38,7 +37,7 @@ class PublisherController extends AbstractController
 
                 $this->addFlash('success', 'La fiche de l\'éditeur a bien été créé');
 
-                return $this->redirectToRoute('admin.publishers.index');
+                return $this->redirectToRoute('publishers.index');
             }
 
             return $this->render('admin/publishers/create.html.twig', ['form' => $form]);
@@ -50,7 +49,7 @@ class PublisherController extends AbstractController
     {
         if (!$publisher) {
             $this->addFlash('error', 'Editeur non trouvé');
-            return $this->redirectToRoute('admin.publisher.index');
+            return $this->redirectToRoute('publisher.index');
         }
         $publisherId = $publisher->getId();
 
@@ -63,7 +62,7 @@ class PublisherController extends AbstractController
 
             $this->addFlash('success', 'Fiche éditeur modifiée avec succès');
 
-            return $this->redirectToRoute('admin.publisher.index');
+            return $this->redirectToRoute('publisher.index');
         }
 
         return $this->render(
@@ -80,7 +79,7 @@ class PublisherController extends AbstractController
     {
         if (!$publisher) {
             $this->addFlash('error', 'Fiche éditeur non trouvé');
-            return $this->redirectToRoute('admin.publishers.index');
+            return $this->redirectToRoute('publishers.index');
         }
         if ($this->isCsrfTokenValid('delete' . $publisher->getId(), $request->request->get('token'))) {
             $this->em->remove($publisher);
@@ -91,6 +90,6 @@ class PublisherController extends AbstractController
             $this->addflash('error', 'token CSRF invalide');
         }
 
-        return $this->redirectToRoute('admin.publishers.index');
+        return $this->redirectToRoute('publishers.index');
     }
 }

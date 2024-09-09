@@ -46,8 +46,9 @@
 				{% if avis.user.id == app.user.id %}
 					<div class="comment">
 						<div class="commentHeader">
+							<p>{{avis.book.title}}</p>
 							<a href="{{path('books.details', {id: avis.book.id})}}">
-								<p>{{avis.book.title}}</p>
+								<button>Voir la fiche</button>
 							</a>
 							<p>{{avis.createdAt | format_datetime('full', 'medium', locale='fr')}}</p>
 						</div>
@@ -79,8 +80,9 @@
 				{% if comment.author.id == app.user.id %}
 					<div class="comment">
 						<div class="commentHeader">
+							<p>{{comment.post.title}}</p>
 							<a href="{{path('post.details', {id: comment.post.id})}}">
-								<p>{{comment.post.title}}</p>
+								<button>Voir l'article</button>
 							</a>
 							<p>{{comment.title}}</p>
 							<p>{{comment.createdAt | format_datetime('full', 'medium', locale='fr')}}</p>

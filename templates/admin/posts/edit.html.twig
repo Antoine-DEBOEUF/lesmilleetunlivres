@@ -8,8 +8,8 @@
 	<section>
 		<h1>Modification d'un article</h1>
 		<div class="glassmorph">
-			<a href="{{path('admin.posts.details', {id: post.id})}}">
-				<button>Retour</button>
+			<a href="{{path('post.details', {id: post.id})}}" style="text-decoration: underline">
+				Retour
 			</a>
 			{{form_start(form, {'attr':{'class':'formAdmin'}})}}
 			{{form_widget(form)}}
@@ -18,7 +18,7 @@
 
 			<form action="{{path('admin.post.delete', {id:post.id})}}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article?')">
 				<input type="hidden" name="token" value="{{csrf_token('delete' ~ post.id)}}">
-				<button>Supprimer</button>
+				<button class="btnDelete">Supprimer</button>
 			</form>
 		</div>
 	</section>

@@ -9,7 +9,7 @@
 	<section>
 		<h1>Profil utilisateur
 			{{user.username}}</h1>
-		<a href="{{path('users.profile', {id: user.id})}}">Retour au profil</a>
+		<a href="{{path('users.profile', {id: user.id})}}" style="text-decoration: underline">Retour au profil</a>
 
 		<div class="glassmorph">
 			{% if user == app.user %}

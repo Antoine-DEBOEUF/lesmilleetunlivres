@@ -20,8 +20,7 @@ class CommentaryController extends AbstractController
     public function __construct(
         private EntityManagerInterface $em,
         private CommentariesRepository $commentRepo,
-    ) {
-    }
+    ) {}
 
 
     #[Route('/{id}/edit', '.edit', methods: ['GET', 'POST'])]
@@ -30,7 +29,7 @@ class CommentaryController extends AbstractController
 
         $commentaryId = $commentary->getId();
 
-        $form = $this->createForm(CommentaryType::class, $commentary);
+        $form = $this->createForm(CommentaryType::class, $commentary, ['isAdmin' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

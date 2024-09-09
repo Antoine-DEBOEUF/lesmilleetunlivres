@@ -9,8 +9,8 @@
 
 {% block body %}
 	<section class="glassmorph">
-		<a href="{{path('books.index')}}">
-			<button>Retour à l'index</button>
+		<a href="{{path('books.index')}}" style="text-decoration: underline">
+			Retour à l'index
 		</a>
 
 		<h1 class="cardTitle">{{book.title}}</h1>
@@ -24,11 +24,11 @@
 		</div>
 		<div id="bookView">
 			<aside>
-				{% if book.bookCover %}
-					{{book.bookCover}}
+				{% if book.imageName %}
+					<img class="bookCover" src="{{vich_uploader_asset(image)}}" alt="{{book.imageName}}" loading="lazy">
 
 				{% else %}
-					<img src="/images/defaultImage.jpg" alt="Image de la couverture indisponible" width="120vw" height="200vh">
+					<img class="bookCover" src="/images/default_image.png" alt="Image de la couverture indisponible">
 				{% endif %}
 
 			</aside>
@@ -54,7 +54,7 @@
 					{{book.isbn}}
 				</p>
 				<p class="bookIntelItem">
-					Synopsis :
+					Synopsis :<br>
 					{{book.synopsis}}
 				</p>
 				{% if is_granted('ROLE_ADMIN') %}
@@ -100,7 +100,9 @@
 					{% if app.user %}
 						{% if app.user.enable == 1 and commentary.user == app.user %}
 
-							<p>Votre avis pour ce livre</p>
+							<p>
+								<strong>Votre avis pour ce livre</strong>
+							</p>
 							{% include "components/commentCard.html.twig" %}
 
 
@@ -112,25 +114,30 @@
 						{% if commentary.enable == 1 and commentary.user != app.user %}
 
 							{% include "components/commentCard.html.twig" %}
-						{% endif %}
-						{% if app.user.enable == 1 and commentary.user != app.user %}
-							<div class="commentForm">
-								Rédiger un avis
-								{{form_start(form)}}
-								{{form_widget(form)}}
-								<button type="submit">Publier</button>
-								{{form_end(form)}}
-							</div>
+
+
+						{% elseif is_granted('ROLE_ADMIN') %}
+							{% include "components/commentCard.html.twig" %}
 
 						{% endif %}
-					{% elseif is_granted('ROLE_ADMIN') %}
-						{% include "components/commentCard.html.twig" %}
-
 					{% elseif commentary.enable == 1 %}
 						{% include "components/commentCard.html.twig" %}
 					{% endif %}
 
+
 				{% endfor %}
+				{% if app.user and app.user.enable == 1 %}
+
+					<div class="commentForm">
+						Rédiger un avis
+						{{form_start(form)}}
+						{{form_widget(form)}}
+						<button type="submit">Publier</button>
+						{{form_end(form)}}
+					</div>
+
+
+				{% endif %}
 
 				{% if app.user is null %}
 

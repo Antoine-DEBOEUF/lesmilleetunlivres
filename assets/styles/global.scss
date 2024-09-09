@@ -29,6 +29,7 @@ h1{
     font-family: $font-title;
     color: white;
     font-size: 3em;
+    margin: 1.5em 0 1.5em 0;
 }
 
 header{
@@ -47,6 +48,7 @@ header{
     background-position:center bottom ;
     background-size: cover;
     z-index:2;
+    border-bottom: 5px solid;
 }
 
 footer{
@@ -60,6 +62,7 @@ footer{
     margin: auto ;
     z-index: 2;
     padding-top: 2vh;
+    border-top: 5px solid;
     
 }
 
@@ -68,9 +71,14 @@ footer{
     color: white;
 }
 
-a {
+.btnDelete:hover{
+    background-color: red;
+    color: white;
+}
+
+a{
     text-decoration: none;
-    color:black ;
+    color: black;
 }
 
 section {
@@ -89,6 +97,15 @@ button{
     border-radius: 1em;
     margin-top: 1em;
     font-family: $font-primary;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    
+}
+
+button:hover{
+    
+    background-color: $colorCardMenu;
 }
 
 .actionBtns{
@@ -107,6 +124,7 @@ button{
     align-items: center;
     padding: 2vh;
     margin: auto;
+    border: solid 1px;
     
 }
 

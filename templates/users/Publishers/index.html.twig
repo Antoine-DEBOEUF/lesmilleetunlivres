@@ -8,6 +8,12 @@
 	<section>
 		<h1>Index des éditeurs</h1>
 		<div id="publishersList">
+			{% if is_granted('ROLE_ADMIN') %}
+				<a href="{{path('admin.publishers.create')}}">
+					<button>Créer une fiche éditeur</button>
+				</a>
+			{% endif %}
+
 
 			{% for publisher in publishers %}
 

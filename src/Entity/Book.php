@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-
+use App\Entity\Traits\DateTimeTrait;
 use App\Entity\Traits\EnableTrait;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\DBAL\Types\Types;
@@ -14,10 +14,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[Vich\Uploadable]
 class Book
 {
     use EnableTrait;
+    // use DateTimeTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -66,7 +68,7 @@ class Book
     private Collection $categories;
 
 
-    #[Vich\UploadableField(mapping: 'images', fileNameProperty: 'imageName', size: 'fileSize')]
+    #[Vich\UploadableField(mapping: 'bookCover', fileNameProperty: 'imageName', size: 'fileSize')]
     #[Assert\Image(detectCorrupted: true)]
     private ?File $bookCover = null;
 
@@ -255,12 +257,15 @@ class Book
      *
      * @return self
      */
-    public function setBookCover(?File $bookCover): self
-    {
-        $this->bookCover = $bookCover;
-
-        return $this;
-    }
+    // public function setBookCover(?File $bookCover = null): void
+    // {
+    //     $this->bookCover = $bookCover;
+    //     if (null !== $bookCover) {
+    //         // It is required that at least one field changes if you are using doctrine
+    //         // otherwise the event listeners won't be called and the file is lost
+    //         $this->updatedAt = new \DateTimeImmutable();
+    //     }
+    // }
 
     /**
      * Get the value of imageName

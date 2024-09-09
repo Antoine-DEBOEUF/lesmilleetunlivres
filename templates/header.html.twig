@@ -1,13 +1,14 @@
 <header>
+	<a href="/" id="websiteTitle">Les mille et un livres</a>
 	<nav>
-		<p id="websiteTitle">Les mille et un livres</p>
+
 		<ul id="navbarHeader">
 			<li>
 
 				{% if app.user %}
 
 					<a class="headerLink" href="{{path('users.profile', {id: app.user.id})}}">
-						<button>Profil</button>
+						<button>{{app.user}}</button>
 					</a>
 
 				{% else %}
@@ -76,26 +77,29 @@
 			<a class="menu_header_item" href="mailto:admin@test.com">Nous contacter</a>
 		{% endif %}
 
-		<a class="menu_header_item" href="/">Accueil</a>
+		<a class="menu_header_item" href="/">
+			<h3>Accueil</h3>
+		</a>
 
 		<div class="menu_header_section">
-			<h3>Articles</h3>
-			<a class="menu_header_item" href="{{path('post.index')}}">Index</a>
+
+			<a class="menu_header_item" href="{{path('books.index')}}">
+				<h3>Livres</h3>
+			</a>
 		</div>
 
 		<div class="menu_header_section">
-			<h3>Livres</h3>
-			<a class="menu_header_item" href="{{path('books.index')}}">Index</a>
+
+			<a class="menu_header_item" href="{{path('authors.index')}}">
+				<h3>Auteurs</h3>
+			</a>
 		</div>
 
 		<div class="menu_header_section">
-			<h3>Auteurs</h3>
-			<a class="menu_header_item" href="{{path('authors.index')}}">Index</a>
-		</div>
 
-		<div class="menu_header_section">
-			<h3>Editeurs</h3>
-			<a class="menu_header_item" href="{{path('publishers.index')}}">Index</a>
+			<a class="menu_header_item" href="{{path('publishers.index')}}">
+				<h3>Editeurs</h3>
+			</a>
 		</div>
 
 	{% endif %}

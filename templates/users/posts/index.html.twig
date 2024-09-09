@@ -6,11 +6,24 @@
 
 {% block body %}
 	<section>
-		<h1>Articles</h1>
+		<h1>Bienvenue!</h1>
 
+		<div class="glassmorph" id="jumbotron">
+			<h2 class="jumbotronItem">L'application pour découvrir, partager et échanger vos lectures favorites.</h2>
+			<p></p>
+
+		</div>
+
+		<h1>Actualités</h1>
+		{% if is_granted('ROLE_ADMIN') %}
+			<a href="{{path('admin.post.create')}}">
+				<button>Créer un article</button>
+			</a>
+		{% endif %}
 		{% for post in posts %}
 
 			{% if post.enable == 1 %}
+
 
 				<div class="articleCard glassmorph">
 					<a href="{{path('post.details', {id: post.id})}}">
@@ -27,7 +40,9 @@
 						</div>
 					</a>
 				</div>
+
 			{%  elseif post.enable == 0 and is_granted('ROLE_ADMIN') %}
+
 				<div class="articleCard glassmorph">
 					<a href="{{path('post.details', {id: post.id})}}">
 						<div class="articleContent">
@@ -41,6 +56,7 @@
 						</div>
 					</a>
 				</div>
+
 			{% endif %}
 
 		{% endfor %}

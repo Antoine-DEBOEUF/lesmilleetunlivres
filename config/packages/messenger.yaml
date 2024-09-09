@@ -5,7 +5,7 @@ framework:
     transports:
       # https://symfony.com/doc/current/messenger.html#transport-configuration
       async:
-        dsn: "MAILER_DSN=smtp://e6ffe83360fec0:********a2b6@sandbox.smtp.mailtrap.io:2525"
+        dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
         options:
           use_notify: true
           check_delayed_interval: 60000

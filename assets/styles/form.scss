@@ -12,7 +12,12 @@
     margin-bottom: 20px;
     flex-wrap: wrap;
     border-radius: 5px;
-    height:25px;
+    height:fit-content;
+    width: fit-content;
     padding: 5px;
     
+    > option{
+        padding: 1em;
+    }
 }
+

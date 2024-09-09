@@ -19,8 +19,7 @@ class AuthorController extends AbstractController
     public function __construct(
         private AuthorRepository $authorRepo,
         private EntityManagerInterface $em
-    ) {
-    }
+    ) {}
 
     #[Route('/create', '.create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response|RedirectResponse
@@ -35,7 +34,7 @@ class AuthorController extends AbstractController
 
                 $this->addFlash('success', 'La fiche de l\'auteur a bien été créé');
 
-                return $this->redirectToRoute('admin.authors.index');
+                return $this->redirectToRoute('authors.index');
             }
 
             return $this->render('admin/authors/create.html.twig', ['form' => $form]);
@@ -47,7 +46,7 @@ class AuthorController extends AbstractController
     {
         if (!$author) {
             $this->addFlash('error', 'Auteur non trouvé');
-            return $this->redirectToRoute('admin.authors.index');
+            return $this->redirectToRoute('authors.index');
         }
         $authorId = $author->getId();
 
@@ -60,7 +59,7 @@ class AuthorController extends AbstractController
 
             $this->addFlash('success', 'Fiche auteur modifiée avec succès');
 
-            return $this->redirectToRoute('admin.authors.index');
+            return $this->redirectToRoute('authors.index');
         }
 
         return $this->render(
@@ -77,7 +76,7 @@ class AuthorController extends AbstractController
     {
         if (!$author) {
             $this->addFlash('error', 'Auteur non trouvé');
-            return $this->redirectToRoute('admin.authors.index');
+            return $this->redirectToRoute('authors.index');
         }
         if ($this->isCsrfTokenValid('delete' . $author->getId(), $request->request->get('token'))) {
             $this->em->remove($author);
@@ -88,6 +87,6 @@ class AuthorController extends AbstractController
             $this->addflash('error', 'token CSRF invalide');
         }
 
-        return $this->redirectToRoute('admin.authors.index');
+        return $this->redirectToRoute('authors.index');
     }
 }
