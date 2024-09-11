@@ -13,7 +13,7 @@ body{
 
 main{
     margin: auto;
-    background-image: url(../../../images/ai-generated-8726156_1920.jpg);
+    background-image: url(../../public/images/background_compressed.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -44,7 +44,7 @@ header{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    background-image: url(../../../images/ai-generated-8404320_1280_2.png);
+    background-image: url(../../public/images/header_compressed.png);
     background-position:center bottom ;
     background-size: cover;
     z-index:2;
@@ -52,7 +52,7 @@ header{
 }
 
 footer{
-    background-image: url(../../../images/ai-generated-8547577_640.png);
+    background-image: url(../../public/images/footer_compressed.png);
     background-position: center bottom;
     background-repeat: no-repeat;
     background-size: cover;
